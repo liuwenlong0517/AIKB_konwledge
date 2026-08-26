@@ -150,8 +150,8 @@ PowerShell 包装器中的环境变量只影响当前 hook 进程及其 Python �
 
 ## 关联信息
 
-- [Agent 配置生成器](../../../system/adapters/shared/AdapterConfig.psm1)：按 Agent 生成 Shell 与 handler 配置。
-- [共享 PowerShell hook 包装器](../../../system/adapters/shared/aikb-hook.ps1)：固定 PowerShell 与 Python 子进程的 UTF-8 边界。
-- [Python CLI 入口](../../../system/tools/aikb-mcp/aikb/__main__.py)：显式重配标准流编码。
-- [适配器回归测试](../../../system/tests/validate-adapters.ps1)：执行生成后的 Codex/Claude Code handler，并验证中文往返。
-- [Python 核心测试](../../../system/tools/aikb-mcp/tests/test_core.py)：在 CP936 对抗环境中验证 CLI stdin/stdout。
+- 控制仓 `system/adapters/shared/AdapterConfig.psm1`：按 Agent 生成 Shell 与 handler 配置。
+- 控制仓 `system/adapters/shared/aikb-hook.ps1`：固定 PowerShell 与 Python 子进程的 UTF-8 边界。
+- 控制仓 `system/tools/aikb-mcp/aikb/__main__.py`：显式重配标准流编码。
+- 控制仓 `system/tests/validate-adapters.ps1`：执行生成后的 Codex/Claude Code handler，并验证中文往返。
+- 控制仓 `system/tools/aikb-mcp/tests/test_core.py`：在 CP936 对抗环境中验证 CLI stdin/stdout。
