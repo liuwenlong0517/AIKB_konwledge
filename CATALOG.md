@@ -37,6 +37,7 @@
   - [PowerShell profile 中实现 Linux 风格列表并区分预测建议与 Tab 补全](experience/solutions/powershell-profile-psreadline-completion.md)：修复 `ll` 的错误参数用法，并通过 PSReadLine 配置区分行内预测建议与命令补全菜单。
 - [工程陷阱](experience/pitfalls/README.md)：已经验证的陷阱与规避方式。
   - [Windows Agent Hook 必须分别固定 Shell 解释器与 UTF-8 进程边界](experience/pitfalls/windows-agent-hook-shell-encoding-boundaries.md)：区分 PowerShell 命令被 Git Bash 误解析与 Python/PowerShell 标准流编码冲突，并给出真实 handler 的诊断、修复和回归方式。
+  - [PowerShell 脚本中文输出被按 UTF-8 解码成乱码：须在脚本顶部固定输出编码](experience/pitfalls/powershell-script-output-encoding-redirected-capture.md)：维护脚本在重定向/非控制台环境默认输出 GBK，被按 UTF-8 解码的消费者捕获时乱码；固定编码必须放在脚本顶部首个输出之前。
 - [工程决策](experience/decisions/README.md)：保留背景和取舍理由的工程决策，暂无具体条目。
 
 ## 工作流
