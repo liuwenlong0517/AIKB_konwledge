@@ -1,3 +1,12 @@
+---
+id: aikb:workflows:development
+type: workflow
+status: candidate
+tags: ["workflow", "development"]
+supersedes: []
+relations: []
+---
+
 # 开发流程
 
 状态：待定义。仅在形成经过实践验证、适用范围明确的开发流程后补充。

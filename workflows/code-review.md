@@ -1,3 +1,12 @@
+---
+id: aikb:workflows:code-review
+type: workflow
+status: candidate
+tags: ["workflow", "code-review"]
+supersedes: []
+relations: []
+---
+
 # 代码评审流程
 
 状态：待定义。仅在形成经过实践验证、适用范围明确的代码评审流程后补充。
