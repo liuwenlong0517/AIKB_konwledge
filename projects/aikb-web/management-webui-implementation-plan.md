@@ -3,11 +3,13 @@ id: aikb:projects:aikb-web:management-webui-implementation-plan
 type: project-memory
 status: verified
 tags: [aikb-web, webui, fastapi, react, knowledge-management, control-plane, audit, windows, macos]
-applicable_versions: AIKB WebUI planning baseline 2026-08-29; implementation not started
+applicable_versions: AIKB WebUI planning baseline 2026-08-29; phase 1 implemented
 last_verified: 2026-08-29
 review_when: WebUI 开始阶段开发、控制动作边界变化、AIKB 事实源或目录边界变化、macOS 设备就位并准备实现时
 supersedes: []
-relations: []
+relations:
+  - type: related_to
+    target: aikb:projects:aikb-web:phase-1-read-only-mvp
 ---
 
 # AIKB 管理 WebUI 分阶段建设计划
@@ -18,7 +20,7 @@ AIKB 需要一套本地管理 WebUI，第一阶段用于查看已经落地的知
 
 项目初期以 Windows 为正式开发和验证平台。macOS 设备尚未就位，因此现阶段不开发 macOS 实现，也不声明已经兼容 macOS；公共接口、目录和平台能力模型必须预留扩展位置，使后续能够增加 macOS 适配而不重做前端、API、任务和审计体系。
 
-本计划是阶段开发的规划基线。当前仅完成方案确认，尚未创建 `aikb-web` 源码子工程，也未实现其中任何功能。
+本计划是阶段开发的规划基线。2026-08-29 已创建 `aikb-web` 子工程并完成阶段 0 与阶段 1 的只读知识 MVP；后续阶段仍按本文边界推进，具体实现基线见关联条目。
 
 ## 建设目标
 
@@ -481,13 +483,13 @@ macOS 平台实现与真实回归
 
 ## 验证
 
-本计划来自 2026-08-29 的用户需求确认和当前 AIKB 代码边界核对。写入前分别检索 `status: verified` 与 `status: candidate`，未发现同主题知识条目。
+本计划来自 2026-08-29 的用户需求确认和当前 AIKB 代码边界核对。写入前分别检索 `status: verified` 与 `status: candidate`，未发现同主题知识条目。2026-08-29 在阶段开发开始后按 `review_when` 人工复核，确认目录、技术框架、安全边界和 macOS 预留策略仍适用，并同步当前实现状态。
 
 当前 AIKB 的 React/FastAPI 选型属于新项目规划；现有共享 Python 核心可作为知识、审计和状态读取基础。当前 Agent adapters、环境变量安装器和 Hook 命令仍以 Windows 为边界，因此 macOS 只保留扩展契约，不能作为已实现能力。
 
 ## 适用范围
 
-适用于 AIKB 管理 WebUI 从方案确认到分阶段开发的架构和范围控制。本文不代表源码已创建、功能已实现、macOS 已兼容或阶段工期已承诺。
+适用于 AIKB 管理 WebUI 从方案确认到分阶段开发的架构和范围控制。阶段 0 与阶段 1 已实现；本文仍不代表后续阶段已经实现、macOS 已兼容或阶段工期已承诺。
 
 当 WebUI 开始实际开发、事实源或仓库边界变化、动作风险模型调整，或者 macOS 设备就位准备开发时，必须复核本计划并按当前代码、Agent 和操作系统行为更新。
 
