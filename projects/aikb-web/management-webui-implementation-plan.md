@@ -3,7 +3,7 @@ id: aikb:projects:aikb-web:management-webui-implementation-plan
 type: project-memory
 status: verified
 tags: [aikb-web, webui, fastapi, react, knowledge-management, control-plane, audit, windows, macos]
-applicable_versions: AIKB WebUI planning baseline 2026-08-29; phase 1 implemented
+applicable_versions: AIKB WebUI planning baseline 2026-08-29; phases 1 and 2 implemented
 last_verified: 2026-08-29
 review_when: WebUI 开始阶段开发、控制动作边界变化、AIKB 事实源或目录边界变化、macOS 设备就位并准备实现时
 supersedes: []
@@ -479,7 +479,7 @@ macOS 设备就位
 macOS 平台实现与真实回归
 ```
 
-阶段 1 交付定义为：Windows 本地运行的 AIKB 知识读取 MVP，包含总览、目录、搜索、阅读和基础系统状态。阶段 2 完成后形成第一版完整只读管理终端，再增加 Working State、检查点、双仓状态和审计查询；工程继续保留动作模型、平台能力接口和 macOS 扩展位置，但不声称支持 macOS。
+阶段 1 已交付 Windows 本地知识读取 MVP，包含总览、目录、搜索、阅读和基础系统状态。阶段 2 已增加活动 Working State、检查点、双仓安全摘要和审计查询，形成第一版完整只读管理终端；工程继续保留动作模型、平台能力接口和 macOS 扩展位置，但不声称支持 macOS。
 
 ## 验证
 
@@ -489,7 +489,7 @@ macOS 平台实现与真实回归
 
 ## 适用范围
 
-适用于 AIKB 管理 WebUI 从方案确认到分阶段开发的架构和范围控制。阶段 0 与阶段 1 已实现；本文仍不代表后续阶段已经实现、macOS 已兼容或阶段工期已承诺。
+适用于 AIKB 管理 WebUI 从方案确认到分阶段开发的架构和范围控制。阶段 0、阶段 1 与阶段 2 已实现；本文仍不代表阶段 3 及以后已经实现、macOS 已兼容或阶段工期已承诺。
 
 当 WebUI 开始实际开发、事实源或仓库边界变化、动作风险模型调整，或者 macOS 设备就位准备开发时，必须复核本计划并按当前代码、Agent 和操作系统行为更新。
 
