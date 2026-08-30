@@ -3,7 +3,7 @@ id: aikb:projects:aikb-web:phase-4-rule-governance-preconditions
 type: project-memory
 status: verified
 tags: [aikb-web, webui, phase-4, rule-governance, atomic-write, rollback, audit, security, windows]
-applicable_versions: AIKB WebUI phase 4A wave 3 isolated acceptance completed, real checkout round-trip pending authorization
+applicable_versions: AIKB WebUI phase 4A first release acceptance completed on Windows
 last_verified: 2026-08-30
 review_when: 阶段4A开始任务分发、可写规则白名单变化、规则验证或原子替换方案变化、审计schema变化、安装修复动作准备准入时
 supersedes: []
@@ -20,7 +20,7 @@ relations:
 
 阶段 3 的静态动作、任务、SSE、Windows 执行器和审计链路已经稳定，可以进入阶段 4 的前置开发阶段，但不能直接开放高风险写入。阶段 4 拆为 4A 规则治理和 4B 安装修复；第一小版本只建立规则审阅、候选校验、完整差异预览和 `USER_RULES.md` 的受控修改闭环。
 
-本基线是任务分发与验收契约。2026-08-30 已完成波次 0～2，并在波次 3 完成隔离临时 Git 仓的 Windows 故障注入、两个独立进程认领竞争、崩溃恢复、UTF-8/CRLF 边界和真实浏览器成功应用流程。应用只接收服务端变更 ID 与进程内令牌，不产生 Git commit/push；其他规则、知识、安装和修复仍不可写。真实 AIKB checkout 的 `USER_RULES.md` 等价往返未获授权、未执行，当前只能声明隔离终验通过，不能形成最终发布结论或扩大可写规则范围；完整接口、状态机和失败矩阵位于控制仓 `system/tools/aikb-web/docs/phase-4-preconditions.md`。
+本基线是任务分发与验收契约。2026-08-30 已完成波次 0～3，包括隔离临时 Git 仓的 Windows 故障注入、两个独立进程认领竞争、崩溃恢复、UTF-8/CRLF 边界、真实浏览器成功应用流程，以及经用户授权的真实 AIKB checkout `USER_RULES.md` 等价往返。真实往返的任务、变更事务与审计关联成功，恢复后文件哈希回到原始值且双仓 clean。应用只接收服务端变更 ID 与进程内令牌，不产生 Git commit/push；其他规则、知识、安装和修复仍不可写。阶段 4A 第一小版本已满足发布门槛，但该结论不能用于扩大可写规则范围或直接启动 4B；完整接口、状态机、失败矩阵和哈希证据位于控制仓 `system/tools/aikb-web/docs/phase-4-preconditions.md`。
 
 ## 首批规则边界
 
@@ -67,11 +67,12 @@ relations:
 
 ## 验证依据
 
-- 控制仓 `main@495d530307f3` 与知识仓 `main@d0151a12f21d` 均为干净工作区；
+- 真实 checkout 往返基线为控制仓 `main@39d794c`、知识仓 `main@55165c9` 且双仓 clean；恢复后 `USER_RULES.md` 与保留备份 SHA256 均为 `19c36e42eb891173c08d29a568d1a4a74241ef199f1d10fd33b3f941973847da`；
+- 最终正式门禁通过共享核心 59 项（1 项因当前 Windows 符号链接权限跳过）、Web 后端 116 项（13 项显式验收开关用例跳过，相关 Windows 隔离场景已单独运行通过）、前端 42 项，以及 typecheck、lint、生产构建和 190 个 Markdown/50 个知识内容文件的结构校验；
 - 阶段 3 终验覆盖 MCP 49 项、后端及真实 Windows 55 项、前端 33 项和浏览器任务中心；
 - 2026-08-30 复核现有规则预算/职责校验、静态动作注册、同源保护、审计 v3、原子写入工具和安装脚本真实副作用；
 - 写入前分别检索 `status=verified` 与 `status=candidate`；正式区只有总计划和阶段 3 后续边界涉及规则治理，候选区无同主题条目。
 
 ## 适用范围
 
-适用于 Windows 本地单用户 AIKB WebUI 阶段 4A 的设计、任务分发与验收。本文不授权规则写入立即上线，不代表 `AI_RULES.md`、入口规则、正式知识、安装修复或 macOS 已开放。
+适用于 Windows 本地单用户 AIKB WebUI 阶段 4A 的设计、任务分发与验收。本文确认的发布边界仅为当前 `USER_RULES.md` 受控修改闭环，不代表 `AI_RULES.md`、入口规则、正式知识、安装修复或 macOS 已开放。
