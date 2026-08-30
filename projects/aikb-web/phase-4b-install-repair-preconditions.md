@@ -3,7 +3,7 @@ id: aikb:projects:aikb-web:phase-4b-install-repair-preconditions
 type: project-memory
 status: verified
 tags: [aikb-web, webui, phase-4b, installation, repair, transaction, rollback, agent-adapter, windows, macos]
-applicable_versions: AIKB WebUI phase 4B precondition baseline 2026-08-31; implementation not started
+applicable_versions: AIKB WebUI phase 4B wave 0 contract baseline 2026-08-31; no maintenance runtime
 last_verified: 2026-08-31
 review_when: 阶段4B开始任务分发、Agent用户配置格式变化、安装器目标或受管标记变化、环境变量策略变化、卸载准备准入、macOS设备就位时
 supersedes: []
@@ -20,7 +20,17 @@ relations:
 
 阶段 4A 已验证单文件规则治理事务，但阶段 4B 涉及用户环境和多个 Agent 配置文件，不能直接把现有组合安装脚本注册成 Web 动作。2026-08-31 已完成现有 `setup-aikb.ps1`、环境设置、根指令、MCP/hooks 安装、卸载和诊断链路的副作用审计，并冻结阶段 4B 的首版目标、安全边界、补偿事务、Windows 验收门槛和六个开发波次。
 
-本基线只表示已经具备任务分发条件，安装与修复实现尚未开始。完整接口、状态机、失败矩阵和发布门槛位于控制仓 `system/tools/aikb-web/docs/phase-4b-install-repair-preconditions.md`。
+波次 0 已完成静态目标、平台 SPI、安全规划与事务模型、审计扩展及契约测试，但没有新增维护 API、平台读写适配器或用户配置写入能力。完整接口、状态机、失败矩阵和发布门槛位于控制仓 `system/tools/aikb-web/docs/phase-4b-install-repair-preconditions.md`。
+
+## 波次 0 已落地边界
+
+- 三个维护目标、动作、逻辑叶子、步骤和 `user_config_write` 风险均为服务端闭集；
+- 平台公共模型不允许物理路径、命令、配置正文或任意结果文本，跨目标组合直接拒绝；
+- 维护事务只保存逻辑 ID、有限状态、SHA-256 指纹和叶子进度，状态迁移与恢复态组合 fail-closed；
+- 审计只接受固定维护目标、动作和步骤，公开投影不返回环境值、备份、路径或底层异常；
+- Windows 与 macOS 当前都声明 `reserved_not_implemented`，因此页面和后端不能误报安装修复可用。
+
+下一步是波次 1 的纯读取 `inspect/plan`、维护 API 和页面预览；其验收重点仍是零副作用和非受管敏感配置不回显。
 
 ## 现有链路为什么不能直接复用
 
