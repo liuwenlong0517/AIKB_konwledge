@@ -57,7 +57,7 @@
   - [第二阶段运行状态与审计实现基线](projects/aikb-web/phase-2-runtime-audit.md)：活动 Working State、检查点、双仓安全摘要、脱敏审计和 Windows 只读管理终端验证基线。
   - [第三阶段受控动作前置基线](projects/aikb-web/phase-3-controlled-actions-preconditions.md)：首批动作准入、任务 JSONL、SSE、Windows 进程树取消、同源确认和审计关联规划基线。
   - [第三阶段受控动作与任务中心实现基线](projects/aikb-web/phase-3-controlled-actions-implementation.md)：三项 Windows 只读动作、任务事实源、REST/SSE、Job Object、审计 v3 和安全验收基线。
-  - [第四阶段规则治理前置基线](projects/aikb-web/phase-4-rule-governance-preconditions.md)：首批规则白名单、完整差异、高风险确认、全仓冲突、原子替换、恢复事务、审计 v4 和开发波次基线。
+  - [第四阶段规则治理前置基线](projects/aikb-web/phase-4-rule-governance-preconditions.md)：首批规则白名单、审计 v4、全仓冲突、完整差异预览及后续原子替换/恢复波次；当前波次 0～1 已实现。
 - [Local Code RAG](projects/local-code-rag/README.md)：本地代码索引与检索基础设施的项目知识索引。
   - [本地生成式模型退出 RAG 主链路](projects/local-code-rag/local-llm-exclusion.md)：GPU 资源优先投入 embedding、索引和检索，生成与推理交给外部 Agent。
   - [异步索引任务队列与重启状态边界](projects/local-code-rag/async-index-task-queue.md)：索引任务的持久化状态、单工作线程约束、MCP 查询方式和自动恢复边界。
