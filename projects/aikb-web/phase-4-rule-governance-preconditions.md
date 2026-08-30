@@ -3,7 +3,7 @@ id: aikb:projects:aikb-web:phase-4-rule-governance-preconditions
 type: project-memory
 status: verified
 tags: [aikb-web, webui, phase-4, rule-governance, atomic-write, rollback, audit, security, windows]
-applicable_versions: AIKB WebUI phase 4A waves 0-1 implemented, apply not available
+applicable_versions: AIKB WebUI phase 4A waves 0-2 implemented, wave 3 acceptance pending
 last_verified: 2026-08-30
 review_when: 阶段4A开始任务分发、可写规则白名单变化、规则验证或原子替换方案变化、审计schema变化、安装修复动作准备准入时
 supersedes: []
@@ -20,7 +20,7 @@ relations:
 
 阶段 3 的静态动作、任务、SSE、Windows 执行器和审计链路已经稳定，可以进入阶段 4 的前置开发阶段，但不能直接开放高风险写入。阶段 4 拆为 4A 规则治理和 4B 安装修复；第一小版本只建立规则审阅、候选校验、完整差异预览和 `USER_RULES.md` 的受控修改闭环。
 
-本基线是任务分发契约，不代表规则写入已经实现。2026-08-30 已完成波次 0 和波次 1：共享规则验证器、兼容旧记录的审计 v4、静态规则/事务契约，以及规则目录、详情、`user` 候选校验、完整 diff、五分钟令牌和三栏页面。预览只写专用本机草稿，不修改正式规则、Git、任务或审计；应用、回滚和恢复仍属于后续波次。完整接口、事务状态、失败矩阵与开发波次位于控制仓 `system/tools/aikb-web/docs/phase-4-preconditions.md`。
+本基线是任务分发与验收契约。2026-08-30 已完成波次 0～2：共享规则验证器、兼容旧记录的审计 v4、静态规则/事务契约、规则目录与完整预览，以及 `USER_RULES.md` 的专用任务、跨进程锁、原子替换、自动回滚、启动恢复和三方审计关联。应用只接收服务端变更 ID 与进程内令牌，不产生 Git commit/push；其他规则、知识、安装和修复仍不可写。波次 3 的真实 Windows 故障注入与浏览器终验尚未完成；完整接口、状态机和失败矩阵位于控制仓 `system/tools/aikb-web/docs/phase-4-preconditions.md`。
 
 ## 首批规则边界
 
