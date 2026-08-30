@@ -3,8 +3,8 @@ id: aikb:projects:aikb-web:management-webui-implementation-plan
 type: project-memory
 status: verified
 tags: [aikb-web, webui, fastapi, react, knowledge-management, control-plane, audit, windows, macos]
-applicable_versions: AIKB WebUI planning baseline 2026-08-30; phase 4A first release acceptance completed on Windows
-last_verified: 2026-08-30
+applicable_versions: AIKB WebUI planning baseline 2026-08-31; phase 4A completed and phase 4B preconditions frozen on Windows
+last_verified: 2026-08-31
 review_when: WebUI 开始阶段开发、控制动作边界变化、AIKB 事实源或目录边界变化、macOS 设备就位并准备实现时
 supersedes: []
 relations:
@@ -20,7 +20,7 @@ AIKB 需要一套本地管理 WebUI，第一阶段用于查看已经落地的知
 
 项目初期以 Windows 为正式开发和验证平台。macOS 设备尚未就位，因此现阶段不开发 macOS 实现，也不声明已经兼容 macOS；公共接口、目录和平台能力模型必须预留扩展位置，使后续能够增加 macOS 适配而不重做前端、API、任务和审计体系。
 
-本计划是阶段开发的规划基线。阶段 0 至阶段 3 首批只读动作已完成；2026-08-30 已冻结阶段 4A 规则治理前置契约，并完成波次 0～3 的共享基础、规则审阅/预览、受控原子应用、隔离 Windows 故障注入、真实浏览器成功流程和经授权的真实 checkout 等价规则往返。具体实现与验收边界见关联条目。
+本计划是阶段开发的规划基线。阶段 0 至阶段 3 首批只读动作和阶段 4A 规则治理已完成；2026-08-31 已完成阶段 4B 现有安装链路副作用审计，并冻结用户环境、Codex、Claude Code 三个固定目标及六个开发波次。阶段 4B 当前只具备任务分发条件，尚未开始实现。具体边界见关联条目。
 
 ## 建设目标
 
@@ -411,7 +411,7 @@ parameters:
 
 阶段 4 拆为 4A 规则治理和 4B 安装修复。4A 的任务分发条件已经固定在[第四阶段规则治理前置基线](phase-4-rule-governance-preconditions.md)：首批四项规则可审阅，但只有 `USER_RULES.md` 可受控修改；控制仓必须全仓干净，应用使用候选覆盖校验、完整 diff、单次令牌、专用事务、跨进程锁、原子替换、回滚和审计 v4。当前已完成波次 0～3，并通过经授权的真实 checkout 等价规则往返终验。
 
-4B 不直接复用一键安装脚本。只有 4A 事务与恢复机制通过真实 Windows 验收后，才单独冻结 Agent 目标白名单、环境变量旧值、受管区块、备份、部分失败恢复和真实 handler 验收，再分发安装与修复开发。
+4B 不直接复用一键安装脚本。其独立任务分发条件已经固定在[第四阶段安装与修复前置基线](phase-4b-install-repair-preconditions.md)：首版只允许逐个处理当前 AIKB 用户环境、Codex 和 Claude Code 三个静态目标；浏览器不提交路径或配置正文；跨多个用户文件和环境值的修改使用持久化日志与补偿回滚；卸载和 macOS 不进入首版。当前尚未开始 4B 实现。
 
 验收门槛：
 
@@ -485,7 +485,7 @@ macOS 设备就位
 macOS 平台实现与真实回归
 ```
 
-阶段 1 已交付 Windows 本地知识读取 MVP；阶段 2 已增加活动 Working State、检查点、双仓安全摘要和审计查询；阶段 3 首批三项只读动作、任务中心、实时事件和 Windows 进程树收敛也已实现。阶段 4A 已完成前置契约和波次 0～3，只有 `USER_RULES.md` 可经完整预览、任务、原子替换、回滚恢复和审计关联受控修改；真实 checkout 等价往返已验证最终哈希恢复和双仓 clean，知识、其他正式规则与 Git 元数据仍只读，macOS 继续只保留扩展位置，不声称支持。
+阶段 1 已交付 Windows 本地知识读取 MVP；阶段 2 已增加活动 Working State、检查点、双仓安全摘要和审计查询；阶段 3 首批三项只读动作、任务中心、实时事件和 Windows 进程树收敛也已实现。阶段 4A 已完成规则治理闭环。阶段 4B 已完成独立前置契约，但用户环境和 Agent 安装修复仍未实现；知识、其他正式规则与 Git 元数据保持只读，macOS 继续只保留扩展位置，不声称支持。
 
 ## 验证
 
@@ -495,7 +495,7 @@ macOS 平台实现与真实回归
 
 ## 适用范围
 
-适用于 AIKB 管理 WebUI 从方案确认到分阶段开发的架构和范围控制。阶段 0、阶段 1、阶段 2 与阶段 3 首批只读动作已实现，阶段 4A 已完成前置契约和波次 0～3，并通过真实 checkout 规则往返；本文不代表阶段 4B 安装修复或后续能力已经实现，也不代表 macOS 已兼容或阶段工期已承诺。
+适用于 AIKB 管理 WebUI 从方案确认到分阶段开发的架构和范围控制。阶段 0～3 和阶段 4A 已实现，阶段 4B 已完成前置契约但尚未实现；本文不代表安装、修复、卸载或后续能力已经开放，也不代表 macOS 已兼容或阶段工期已承诺。
 
 当 WebUI 开始实际开发、事实源或仓库边界变化、动作风险模型调整，或者 macOS 设备就位准备开发时，必须复核本计划并按当前代码、Agent 和操作系统行为更新。
 

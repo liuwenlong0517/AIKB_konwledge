@@ -1,6 +1,6 @@
 # AIKB Web 项目知识
 
-本目录记录 AIKB 管理 WebUI（`aikb-web`）的长期架构决策、分阶段实现基线和能力边界。阶段 1、2 与阶段 3 首批受控动作已在 Windows 本机实现并验证；阶段 4A 波次 0～3 已完成隔离 Windows 故障注入、多进程竞争、真实浏览器成功流程和经授权的真实 checkout 等价规则往返，第一小版本发布门槛已满足；阶段 4B 仍须独立准入，macOS 仍只保留扩展位置，不代表已经支持。
+本目录记录 AIKB 管理 WebUI（`aikb-web`）的长期架构决策、分阶段实现基线和能力边界。阶段 1、2 与阶段 3 首批受控动作已在 Windows 本机实现并验证；阶段 4A 第一小版本发布门槛已满足；阶段 4B 安装与修复已完成独立前置契约和六波次拆分，但尚未开始实现；macOS 仍只保留扩展位置，不代表已经支持。
 
 ## 项目索引
 
@@ -10,3 +10,4 @@
 - [第三阶段受控动作前置基线](phase-3-controlled-actions-preconditions.md)：冻结动作准入、任务 JSONL、SSE、Windows Job Object、同源确认和审计关联。
 - [第三阶段受控动作与任务中心实现基线](phase-3-controlled-actions-implementation.md)：记录三项只读动作、任务中心、安全执行链路、审计 v3 和 Windows 真实验收。
 - [第四阶段规则治理前置基线](phase-4-rule-governance-preconditions.md)：冻结首批规则白名单、差异确认、全仓冲突、原子替换、失败恢复、审计 v4 和开发波次。
+- [第四阶段安装与修复前置基线](phase-4b-install-repair-preconditions.md)：冻结用户环境、Codex、Claude Code 三个静态目标，以及安全预览、跨文件补偿事务、崩溃恢复和 Windows 真实验收门槛。
