@@ -3,7 +3,7 @@ id: aikb:projects:aikb-web:phase-4b-install-repair-preconditions
 type: project-memory
 status: verified
 tags: [aikb-web, webui, phase-4b, installation, repair, transaction, rollback, agent-adapter, windows, macos]
-applicable_versions: AIKB WebUI phase 4B wave 0 contract baseline 2026-08-31; no maintenance runtime
+applicable_versions: AIKB WebUI phase 4B wave 1 read-only maintenance baseline 2026-08-31; no maintenance writes
 last_verified: 2026-08-31
 review_when: 阶段4B开始任务分发、Agent用户配置格式变化、安装器目标或受管标记变化、环境变量策略变化、卸载准备准入、macOS设备就位时
 supersedes: []
@@ -20,7 +20,7 @@ relations:
 
 阶段 4A 已验证单文件规则治理事务，但阶段 4B 涉及用户环境和多个 Agent 配置文件，不能直接把现有组合安装脚本注册成 Web 动作。2026-08-31 已完成现有 `setup-aikb.ps1`、环境设置、根指令、MCP/hooks 安装、卸载和诊断链路的副作用审计，并冻结阶段 4B 的首版目标、安全边界、补偿事务、Windows 验收门槛和六个开发波次。
 
-波次 0 已完成静态目标、平台 SPI、安全规划与事务模型、审计扩展及契约测试，但没有新增维护 API、平台读写适配器或用户配置写入能力。完整接口、状态机、失败矩阵和发布门槛位于控制仓 `system/tools/aikb-web/docs/phase-4b-install-repair-preconditions.md`。
+波次 0 已完成静态目标、平台 SPI、安全规划与事务模型、审计扩展及契约测试；波次 1 已实现 Windows 纯读取 `inspect/plan`、维护 API 和“安装与修复”页面，但没有应用接口或用户配置写入能力。完整接口、状态机、失败矩阵和发布门槛位于控制仓 `system/tools/aikb-web/docs/phase-4b-install-repair-preconditions.md`。
 
 ## 波次 0 已落地边界
 
@@ -30,7 +30,15 @@ relations:
 - 审计只接受固定维护目标、动作和步骤，公开投影不返回环境值、备份、路径或底层异常；
 - Windows 与 macOS 当前都声明 `reserved_not_implemented`，因此页面和后端不能误报安装修复可用。
 
-下一步是波次 1 的纯读取 `inspect/plan`、维护 API 和页面预览；其验收重点仍是零副作用和非受管敏感配置不回显。
+## 波次 1 已落地边界
+
+- Windows 只读适配器只读取当前用户固定环境与 Agent 配置，用户环境仅查询两个 AIKB 注册表值，非受管正文不进入响应；
+- 维护 API 提供固定目标列表、详情和结构化预览，预览只接收基线指纹并执行回环同源安全门禁；
+- 完整维护能力与只读能力分离：Windows 只读检查/预览可用，但应用仍不可用；macOS 继续仅保留扩展位置；
+- 页面显示环境、Codex、Claude Code 状态、逻辑叶子和受管差异摘要，不提供应用、修复、卸载或任意配置输入；
+- 正式门禁通过 MCP 66 项、后端 156 项、前端 47 项、类型检查、Lint、生产构建和结构校验；真实浏览器状态读取与预览通过且无控制台错误。
+
+下一步是波次 2 的多目标事务、备份、全局锁、补偿回滚和启动恢复。进入波次 2 不等于开放任何具体 Windows 写目标；写入实现仍须保持在隔离 fixture 和故障注入范围内，真实用户配置继续需要后续逐次授权验收。
 
 ## 现有链路为什么不能直接复用
 
