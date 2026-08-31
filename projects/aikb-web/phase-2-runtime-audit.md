@@ -57,6 +57,12 @@ Vite 生产包仍有约 1.1 MB 的主 JavaScript chunk 警告，gzip 后约 346 
 
 macOS 只保留公共 API、逻辑路径、平台能力与适配器目录位置；没有 macOS 设备实测，因此不得宣称 macOS 已实现或已兼容。后续设备就位后，应在不改变前端公共契约的前提下补充平台实现和真实进程回归。
 
+## 所有权与治理兼容补记（2026-09-01）
+
+Working State Markdown 使用 schema v2，SQLite 派生索引使用独立 schema v3；Markdown 仍是事实源，索引只在版本或指纹变化时重建。Web 运行时保留 `agent` 查询筛选为 latest checkpoint author，同时单独投影 `owner_agent`、`owner_session_id`、`ownership_mode` 和 `participants`，不能把最近作者当作 owner。旧任务无法确定 owner 时显示 `legacy-unbound`，不自动恢复或阻断。
+
+SessionStart/Stop 只接受当前 Agent 与精确 `session_id` 或已登记 participant；foreign task 只产生有限提示/审计，不注入任务正文、不阻断当前会话。`session_id` 只是关联标签，不是密码学凭据。SessionStart 的 review summary 是有限只读投影；当前 WebUI 没有 candidate review 管理入口，Web 审计与正式知识读取仍分别遵循既有安全投影。详见[所有权与知识治理兼容契约](governance-ownership-compatibility.md)。
+
 ## 关联信息
 
 - WebUI 源码与阶段文档：`system/tools/aikb-web/`；

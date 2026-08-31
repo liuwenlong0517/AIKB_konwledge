@@ -3,8 +3,8 @@ id: aikb:projects:aikb-web:phase-4b-install-repair-preconditions
 type: project-memory
 status: verified
 tags: [aikb-web, webui, phase-4b, installation, repair, transaction, rollback, agent-adapter, windows, macos]
-applicable_versions: AIKB WebUI phase 4B wave 1 read-only maintenance baseline 2026-08-31; no maintenance writes
-last_verified: 2026-08-31
+applicable_versions: AIKB WebUI phase 4B waves 0-3 core; Windows inspect/plan remains public read-only maintenance capability; no public apply API
+last_verified: 2026-09-01
 review_when: 阶段4B开始任务分发、Agent用户配置格式变化、安装器目标或受管标记变化、环境变量策略变化、卸载准备准入、macOS设备就位时
 supersedes: []
 relations:
@@ -20,7 +20,7 @@ relations:
 
 阶段 4A 已验证单文件规则治理事务，但阶段 4B 涉及用户环境和多个 Agent 配置文件，不能直接把现有组合安装脚本注册成 Web 动作。2026-08-31 已完成现有 `setup-aikb.ps1`、环境设置、根指令、MCP/hooks 安装、卸载和诊断链路的副作用审计，并冻结阶段 4B 的首版目标、安全边界、补偿事务、Windows 验收门槛和六个开发波次。
 
-波次 0 已完成静态目标、平台 SPI、安全规划与事务模型、审计扩展及契约测试；波次 1 已实现 Windows 纯读取 `inspect/plan`、维护 API 和“安装与修复”页面，但没有应用接口或用户配置写入能力。完整接口、状态机、失败矩阵和发布门槛位于控制仓 `system/tools/aikb-web/docs/phase-4b-install-repair-preconditions.md`。
+波次 0 已完成静态目标、平台 SPI、安全规划与事务模型、审计扩展及契约测试；波次 1 已实现 Windows 纯读取 `inspect/plan`、维护 API 和“安装与修复”页面；随后已实现跨文件事务/恢复门禁以及 Windows `environment` 成组执行、校验和回滚核心。后两者仍是后端隔离核心，公开维护 API 继续没有 apply 接口或用户配置写入能力，Codex/Claude Code 目标也尚未接入。完整接口、状态机、失败矩阵和发布门槛位于控制仓 `system/tools/aikb-web/docs/phase-4b-install-repair-preconditions.md`。
 
 ## 波次 0 已落地边界
 
@@ -38,7 +38,7 @@ relations:
 - 页面显示环境、Codex、Claude Code 状态、逻辑叶子和受管差异摘要，不提供应用、修复、卸载或任意配置输入；
 - 正式门禁通过 MCP 66 项、后端 156 项、前端 47 项、类型检查、Lint、生产构建和结构校验；真实浏览器状态读取与预览通过且无控制台错误。
 
-下一步是波次 2 的多目标事务、备份、全局锁、补偿回滚和启动恢复。进入波次 2 不等于开放任何具体 Windows 写目标；写入实现仍须保持在隔离 fixture 和故障注入范围内，真实用户配置继续需要后续逐次授权验收。
+当前下一步是把已验证的事务/恢复和 `environment` 执行核心接入仍受安全门禁约束的公开 apply 流程，并补齐端到端回归；这不等于三个目标或公开 apply 已完成。Codex/Claude Code 安装修复、真实用户配置往返、多进程/浏览器终验仍须后续逐波完成，真实用户配置继续需要逐次授权验收。
 
 ## 现有链路为什么不能直接复用
 
@@ -108,7 +108,8 @@ macOS 当前只保留 `MaintenancePlatformAdapter` 扩展接口并返回 `suppor
 - Codex 与 Claude Code 清单当前都只声明 Windows，且共享 MCP 与四个生命周期能力；
 - 正式写入前分别检索 `status=verified` 与 `status=candidate`，未发现独立的阶段 4B 安装修复条目；现有阶段 4A 和总计划应通过关系连接而非重复新增；
 - 设计继承阶段 4A 已验证的同源保护、单次令牌、安全任务投影、审计 fail-closed 和第三方修改不覆盖原则。
+- 2026-09-01 控制仓 `HEAD=20c7b38` 已通过 MCP 共享核心 85 项（1 项按 Windows 权限条件跳过）；其前置提交 `d9df240` 已包含事务/恢复门禁和 Windows `environment` 执行核心，但公开维护 API 仍为 inspect/plan 只读、`apply_supported=false`，Codex/Claude Code 尚未接入。
 
 ## 适用范围
 
-适用于 Windows 本地单用户 AIKB WebUI 阶段 4B 的任务分发和后续验收。本文不代表安装、修复、卸载、远程管理或 macOS 已经实现，也不授权在真实用户配置上立即执行写入。
+适用于 Windows 本地单用户 AIKB WebUI 阶段 4B 的任务分发、事务核心开发和后续验收。本文确认部分内部事务/环境执行核心已存在，但不代表安装、修复、卸载、公开 apply、远程管理或 macOS 已经实现，也不授权在真实用户配置上立即执行写入。

@@ -76,3 +76,7 @@ relations:
 ## 适用范围
 
 适用于 Windows 本地单用户 AIKB WebUI 阶段 4A 的设计、任务分发与验收。本文确认的发布边界仅为当前 `USER_RULES.md` 受控修改闭环，不代表 `AI_RULES.md`、入口规则、正式知识、安装修复或 macOS 已开放。
+
+## 治理兼容补记（2026-09-01）
+
+规则注册表继续以共享核心的 `recommended_chars`/`max_chars` 双阈值为准：前者超出时警告，后者超出时拒绝。Web 仍只有 `USER_RULES.md` 进入预览、完整 diff 和确认应用闭环，`AI_RULES.md`、`CONTRIBUTING.md` 与入口规则只读。知识治理 v2 为 opt-in，legacy 条目仍可索引；SessionStart 的 review summary 只返回有限只读摘要，当前 WebUI 没有 candidate review 管理入口。Working State 的 owner/author、exact session 与 foreign task 边界见[所有权与知识治理兼容契约](governance-ownership-compatibility.md)。
