@@ -51,6 +51,8 @@
 ## 项目知识
 
 - [projects/README.md](projects/README.md)：项目级知识的组织规则与项目索引。
+- [AIKB 本体](projects/aikb/README.md)：AIKB 自身控制仓、知识仓与运行面的项目知识索引。
+  - [AIKB 本体审计覆盖面与治理结果（2026-08 审计波次）](projects/aikb/audit-coverage-2026-08.md)：五个维度的审计覆盖、发现→封堵→验证映射，以及剩余取舍项。
 - [AIKB Web](projects/aikb-web/README.md)：AIKB 管理 WebUI 的项目知识索引。
   - [AIKB 管理 WebUI 分阶段建设计划](projects/aikb-web/management-webui-implementation-plan.md)：统一前后端目录、页面布局、技术框架、受控动作模型、Windows 首发范围和 macOS 扩展预留方案。
   - [第一阶段只读知识 MVP 实现基线](projects/aikb-web/phase-1-read-only-mvp.md)：共享知识查询、FastAPI/React 只读实现、安全边界和 Windows 验证基线。

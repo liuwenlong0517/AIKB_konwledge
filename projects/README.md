@@ -4,6 +4,7 @@
 
 ## 项目索引
 
+- [AIKB 本体](aikb/README.md)：AIKB 自身控制仓、知识仓与运行面的审计、治理和运行维护项目知识。
 - [AIKB Web](aikb-web/README.md)：AIKB 管理 WebUI 的架构、页面、受控动作、Windows 首发和跨平台扩展规划。
 - [Local Code RAG](local-code-rag/README.md)：本地代码索引与检索基础设施的项目决策和运行边界。
 - [ToolBox](toolbox/README.md)：原生 JavaScript 开发者工具箱的架构、功能边界与验证基线。
