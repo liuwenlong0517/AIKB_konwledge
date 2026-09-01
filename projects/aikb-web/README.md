@@ -12,3 +12,4 @@
 - [第四阶段规则治理前置基线](phase-4-rule-governance-preconditions.md)：冻结首批规则白名单、差异确认、全仓冲突、原子替换、失败恢复、审计 v4 和开发波次。
 - [第四阶段安装与修复前置基线](phase-4b-install-repair-preconditions.md)：冻结用户环境、Codex、Claude Code 三个静态目标，以及可读漂移语义、安全预览、跨文件补偿事务、崩溃恢复和 Windows 真实验收门槛。
 - [所有权与知识治理兼容契约](governance-ownership-compatibility.md)：记录 Working State v2/v3、owner/author 分离、SessionStart 边界、规则治理 v2 和 Web 只读投影的兼容检查点。
+- [共享检索服务多词查询必然返回空](search-multi-term-query-empty-results.md)：记录 `KnowledgeService.search()` 不做查询分词、含空格多词查询返回空的缺陷事实、根因与复现方式，影响 Web 搜索与 MCP `search_knowledge`。
