@@ -61,7 +61,9 @@ macOS 只保留公共 API、逻辑路径、平台能力与适配器目录位置�
 
 Working State Markdown 使用 schema v2，SQLite 派生索引使用独立 schema v3；Markdown 仍是事实源，索引只在版本或指纹变化时重建。Web 运行时保留 `agent` 查询筛选为 latest checkpoint author，同时单独投影 `owner_agent`、`owner_session_id`、`ownership_mode` 和 `participants`，不能把最近作者当作 owner。旧任务无法确定 owner 时显示 `legacy-unbound`，不自动恢复或阻断。
 
-SessionStart/Stop 只接受当前 Agent 与精确 `session_id` 或已登记 participant；foreign task 只产生有限提示/审计，不注入任务正文、不阻断当前会话。`session_id` 只是关联标签，不是密码学凭据。SessionStart 的 review summary 是有限只读投影；当前 WebUI 没有 candidate review 管理入口，Web 审计与正式知识读取仍分别遵循既有安全投影。详见[所有权与知识治理兼容契约](governance-ownership-compatibility.md)。
+SessionStart/Stop 只接受当前 Agent 与精确 `session_id` 或已登记 participant；`session_id` 在 1..160 个字符内原样保存，拒绝空白/控制字符，Web 的 `owner_session_id` 投影不得截断。旧 `agent+declared-session` 仅在显式升级、同 Agent、完整值经旧算法对应现有 owner 且无 participant 时迁移；旧算法存在碰撞可能，所以还必须有针对具体任务的用户授权。无效 Hook session 降级为无授权路径，不回显、不恢复、不阻断；foreign task 只产生有限提示/审计，不注入任务正文、不阻断当前会话。`session_id` 只是关联标签，不是密码学凭据。SessionStart 的 review summary 是有限只读投影；当前 WebUI 没有 candidate review 管理入口，Web 审计与正式知识读取仍分别遵循既有安全投影。详见[所有权与知识治理兼容契约](governance-ownership-compatibility.md)。
+
+本次完整会话归属修复由控制仓 `90fb17610efc6fe42fb45829fa15d4eacc88030f` 提供；MCP 共享核心共运行 91 项并结果 OK（1 项跳过），Web 后端共运行 257 项并结果 OK（16 项跳过），前端 49 项测试及类型检查、lint、生产构建通过。该修复仅收紧 Working State 归属与 Web 只读投影边界，不新增 WebUI 写入、Shell 或任务管理能力。
 
 ## 关联信息
 
