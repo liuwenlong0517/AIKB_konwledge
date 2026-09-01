@@ -3,7 +3,7 @@ id: aikb:projects:aikb-web:phase-4b-install-repair-preconditions
 type: project-memory
 status: verified
 tags: [aikb-web, webui, phase-4b, installation, repair, transaction, rollback, agent-adapter, windows, macos]
-applicable_versions: AIKB WebUI phase 4B waves 0-3 core; Windows inspect/plan remains public read-only maintenance capability; no public apply API
+applicable_versions: AIKB WebUI phase 4B waves 0-4 development complete; Windows public apply implemented; wave 5 acceptance pending
 last_verified: 2026-09-01
 review_when: 阶段4B开始任务分发、Agent用户配置格式变化、安装器目标或受管标记变化、环境变量策略变化、卸载准备准入、macOS设备就位时
 supersedes: []
@@ -20,7 +20,7 @@ relations:
 
 阶段 4A 已验证单文件规则治理事务，但阶段 4B 涉及用户环境和多个 Agent 配置文件，不能直接把现有组合安装脚本注册成 Web 动作。2026-08-31 已完成现有 `setup-aikb.ps1`、环境设置、根指令、MCP/hooks 安装、卸载和诊断链路的副作用审计，并冻结阶段 4B 的首版目标、安全边界、补偿事务、Windows 验收门槛和六个开发波次。
 
-波次 0 已完成静态目标、平台 SPI、安全规划与事务模型、审计扩展及契约测试；波次 1 已实现 Windows 纯读取 `inspect/plan`、维护 API 和“安装与修复”页面；随后已实现跨文件事务/恢复门禁以及 Windows `environment` 成组执行、校验和回滚核心。后两者仍是后端隔离核心，公开维护 API 继续没有 apply 接口或用户配置写入能力，Codex/Claude Code 目标也尚未接入。完整接口、状态机、失败矩阵和发布门槛位于控制仓 `system/tools/aikb-web/docs/phase-4b-install-repair-preconditions.md`。
+波次 0 已完成静态目标、平台 SPI、安全规划与事务模型、审计扩展及契约测试；波次 1 已实现 Windows 纯读取 `inspect/plan`、维护 API 和“安装与修复”页面；波次 2-4 已接通跨文件事务、恢复门禁、Windows `environment`、Codex/Claude Code 目标、公开 apply/变更状态和前端逐目标确认闭环。开发代码已经完成，但真实 HKCU、真实 Agent handler、真实浏览器、多进程竞争和发布终审尚未执行，因此阶段 4B 仍不能声明发布完成。完整接口、状态机、失败矩阵和发布门槛位于控制仓 `system/tools/aikb-web/docs/phase-4b-install-repair-preconditions.md`。
 
 ## 波次 0 已落地边界
 
@@ -38,7 +38,17 @@ relations:
 - 页面显示环境、Codex、Claude Code 状态、逻辑叶子和受管差异摘要，不提供应用、修复、卸载或任意配置输入；
 - 正式门禁通过 MCP 66 项、后端 156 项、前端 47 项、类型检查、Lint、生产构建和结构校验；真实浏览器状态读取与预览通过且无控制台错误。
 
-当前下一步是把已验证的事务/恢复和 `environment` 执行核心接入仍受安全门禁约束的公开 apply 流程，并补齐端到端回归；这不等于三个目标或公开 apply 已完成。Codex/Claude Code 安装修复、真实用户配置往返、多进程/浏览器终验仍须后续逐波完成，真实用户配置继续需要逐次授权验收。
+当前下一步不再是继续扩展生产能力，而是独立执行波次 5 验收：隔离多进程和崩溃恢复、真实浏览器闭环、固定 probe 的真实进程回归，以及经逐目标授权的真实用户配置往返。任何真实 HKCU 或 Agent 配置写入仍须在验收前列出目标、备份和恢复方式并取得当次明确授权。
+
+## 波次 2-4 已落地边界
+
+- 预览只在进程内暂存安全 plan/status、服务端 change ID 和五分钟令牌，不创建事务、材料、任务、审计或子进程；
+- apply 重新 inspect/plan 并确认计划一致后才创建持久化事务和私有材料，令牌在全局维护锁内完成材料及 preflight 校验后消费；
+- 环境、Codex 和 Claude Code 共用同一事务执行、审计门禁、补偿回滚及恢复状态机；
+- Agent JSON 合并与共享 PowerShell 适配器采用相同的结构键规则，同时保留非受管字段、原始键名和换行风格；
+- 固定 probe 覆盖 MCP initialize、tools/list、四个生命周期 hook 和中文 UTF-8，浏览器不能提供命令或事件；
+- Web 页面只允许逐目标确认，公开任务与变更投影不含路径、正文、环境值、备份、令牌或 probe 原始输出；
+- 自动化门禁通过 MCP 91 项（1 项跳过）、Web 后端 272 项（16 项跳过）、前端 51 项、类型检查、Lint、生产构建、适配器与结构校验。
 
 ## 现有链路为什么不能直接复用
 
@@ -108,8 +118,8 @@ macOS 当前只保留 `MaintenancePlatformAdapter` 扩展接口并返回 `suppor
 - Codex 与 Claude Code 清单当前都只声明 Windows，且共享 MCP 与四个生命周期能力；
 - 正式写入前分别检索 `status=verified` 与 `status=candidate`，未发现独立的阶段 4B 安装修复条目；现有阶段 4A 和总计划应通过关系连接而非重复新增；
 - 设计继承阶段 4A 已验证的同源保护、单次令牌、安全任务投影、审计 fail-closed 和第三方修改不覆盖原则。
-- 2026-09-01 控制仓 `HEAD=20c7b38` 已通过 MCP 共享核心 85 项（1 项按 Windows 权限条件跳过）；其前置提交 `d9df240` 已包含事务/恢复门禁和 Windows `environment` 执行核心，但公开维护 API 仍为 inspect/plan 只读、`apply_supported=false`，Codex/Claude Code 尚未接入。
+- 2026-09-01 最后开发波次由控制仓提交 `751cb05` 落地，包含公开 apply、三目标写适配器、固定 probe 和页面闭环。自动化结果不等于真实用户配置验收。
 
 ## 适用范围
 
-适用于 Windows 本地单用户 AIKB WebUI 阶段 4B 的任务分发、事务核心开发和后续验收。本文确认部分内部事务/环境执行核心已存在，但不代表安装、修复、卸载、公开 apply、远程管理或 macOS 已经实现，也不授权在真实用户配置上立即执行写入。
+适用于 Windows 本地单用户 AIKB WebUI 阶段 4B 的开发完成状态和后续验收。本文确认公开 apply 与三个固定目标的生产代码已实现，但不代表真实用户配置验收、卸载、远程管理或 macOS 已经完成，也不授权立即写入真实 HKCU 或 Agent 配置。
