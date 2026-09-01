@@ -1,6 +1,6 @@
 # AIKB Web 项目知识
 
-本目录记录 AIKB 管理 WebUI（`aikb-web`）的长期架构决策、分阶段实现基线和能力边界。阶段 1、2 与阶段 3 首批受控动作已在 Windows 本机实现并验证；阶段 4A 第一小版本发布门槛已满足；阶段 4B 已完成波次 0/1 的静态与只读预览，以及事务、恢复门禁和 Windows `environment` 执行核心的隔离实现，但公开维护入口仍仅支持 inspect/plan，`apply_supported=false`，Codex/Claude Code 安装修复和公开 apply API 尚未完成；macOS 仍只保留扩展位置，不代表已经支持。
+本目录记录 AIKB 管理 WebUI（`aikb-web`）的长期架构决策、分阶段实现基线和能力边界。阶段 1、2 与阶段 3 首批受控动作已在 Windows 本机实现并验证；阶段 4A 第一小版本发布门槛已满足；阶段 4B 已完成静态目标、安全预览、补偿事务、恢复门禁、Windows 用户环境与 Codex/Claude Code 安装修复、公开 apply、任务投影及三个真实用户目标的独立往返验收。macOS 仍只保留扩展位置，不代表已经支持。
 
 ## 项目索引
 

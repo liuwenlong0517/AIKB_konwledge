@@ -3,7 +3,7 @@ id: aikb:projects:aikb-web:phase-4b-install-repair-preconditions
 type: project-memory
 status: verified
 tags: [aikb-web, webui, phase-4b, installation, repair, transaction, rollback, agent-adapter, windows, macos]
-applicable_versions: AIKB WebUI phase 4B waves 0-4 development complete; Windows public apply implemented; wave 5 acceptance pending
+applicable_versions: AIKB WebUI phase 4B Windows first release complete; waves 0-5 implemented and independently accepted
 last_verified: 2026-09-01
 review_when: 阶段4B开始任务分发、Agent用户配置格式变化、安装器目标或受管标记变化、环境变量策略变化、卸载准备准入、macOS设备就位时
 supersedes: []
@@ -20,7 +20,7 @@ relations:
 
 阶段 4A 已验证单文件规则治理事务，但阶段 4B 涉及用户环境和多个 Agent 配置文件，不能直接把现有组合安装脚本注册成 Web 动作。2026-08-31 已完成现有 `setup-aikb.ps1`、环境设置、根指令、MCP/hooks 安装、卸载和诊断链路的副作用审计，并冻结阶段 4B 的首版目标、安全边界、补偿事务、Windows 验收门槛和六个开发波次。
 
-波次 0 已完成静态目标、平台 SPI、安全规划与事务模型、审计扩展及契约测试；波次 1 已实现 Windows 纯读取 `inspect/plan`、维护 API 和“安装与修复”页面；波次 2-4 已接通跨文件事务、恢复门禁、Windows `environment`、Codex/Claude Code 目标、公开 apply/变更状态和前端逐目标确认闭环。开发代码已经完成，但真实 HKCU、真实 Agent handler、真实浏览器、多进程竞争和发布终审尚未执行，因此阶段 4B 仍不能声明发布完成。完整接口、状态机、失败矩阵和发布门槛位于控制仓 `system/tools/aikb-web/docs/phase-4b-install-repair-preconditions.md`。
+波次 0 已完成静态目标、平台 SPI、安全规划与事务模型、审计扩展及契约测试；波次 1 已实现 Windows 纯读取 `inspect/plan`、维护 API 和“安装与修复”页面；波次 2-4 已接通跨文件事务、恢复门禁、Windows `environment`、Codex/Claude Code 目标、公开 apply/变更状态和前端逐目标确认闭环；波次 5 已完成多进程、真实浏览器和经授权的三个真实用户目标往返验收。阶段 4B Windows 首版达到发布门槛，macOS、卸载和备份清理仍不在本阶段范围内。完整接口、状态机、失败矩阵和发布门槛位于控制仓 `system/tools/aikb-web/docs/phase-4b-install-repair-preconditions.md`。
 
 ## 波次 0 已落地边界
 
@@ -38,7 +38,7 @@ relations:
 - 页面显示环境、Codex、Claude Code 状态、逻辑叶子和受管差异摘要，不提供应用、修复、卸载或任意配置输入；
 - 正式门禁通过 MCP 66 项、后端 156 项、前端 47 项、类型检查、Lint、生产构建和结构校验；真实浏览器状态读取与预览通过且无控制台错误。
 
-当前下一步不再是继续扩展生产能力，而是独立执行波次 5 验收：隔离多进程和崩溃恢复、真实浏览器闭环、固定 probe 的真实进程回归，以及经逐目标授权的真实用户配置往返。任何真实 HKCU 或 Agent 配置写入仍须在验收前列出目标、备份和恢复方式并取得当次明确授权。
+波次 5 已独立验收通过：环境变量、Codex 和 Claude Code 均完成受控漂移、预览、apply、任务投影、固定 probe 与备份恢复一致性检查；最终浏览器中三个目标均回到 `ready`，无应用按钮和控制台告警。验收备份包含用户配置副本，保留在控制仓忽略的私有运行目录中，删除仍需另行明确授权。
 
 ## 波次 2-4 已落地边界
 
@@ -119,7 +119,10 @@ macOS 当前只保留 `MaintenancePlatformAdapter` 扩展接口并返回 `suppor
 - 正式写入前分别检索 `status=verified` 与 `status=candidate`，未发现独立的阶段 4B 安装修复条目；现有阶段 4A 和总计划应通过关系连接而非重复新增；
 - 设计继承阶段 4A 已验证的同源保护、单次令牌、安全任务投影、审计 fail-closed 和第三方修改不覆盖原则。
 - 2026-09-01 最后开发波次由控制仓提交 `751cb05` 落地，包含公开 apply、三目标写适配器、固定 probe 和页面闭环。自动化结果不等于真实用户配置验收。
+- 2026-09-01 独立验收覆盖真实 HKCU、Codex、Claude Code 三目标完整往返，目标专属 MCP/hooks probe 与备份一致性均通过；最终浏览器三目标均为 `ready`，预览禁用且无控制台 warn/error。
+- 验收修复由控制仓提交 `44e6482` 落地，包括无变更预览门禁、environment 生产捕获分派、HKCU 字符串类型保真、Agent 受管指纹边界、Claude 无变更字节保留和任务风险中文映射。
+- 项目一体化门禁通过：MCP 91 项通过、1 项跳过；Web 后端 283 项通过、16 项跳过；Web 前端 58 项通过，并通过类型检查、Lint、生产构建和结构校验。
 
 ## 适用范围
 
-适用于 Windows 本地单用户 AIKB WebUI 阶段 4B 的开发完成状态和后续验收。本文确认公开 apply 与三个固定目标的生产代码已实现，但不代表真实用户配置验收、卸载、远程管理或 macOS 已经完成，也不授权立即写入真实 HKCU 或 Agent 配置。
+适用于 Windows 本地单用户 AIKB WebUI 阶段 4B 的已发布实现和验收基线。本文确认公开 apply、三个固定目标及真实用户配置往返验收已经完成；不代表卸载、远程管理、macOS 实现或验收备份清理已经完成，也不授权后续未经逐次确认写入真实 HKCU 或 Agent 配置。
