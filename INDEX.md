@@ -4,14 +4,14 @@
 
 ## 分类入口
 
-- `knowledge/README.md`：通用工程、语言、框架和工具知识。
-- `experience/README.md`：候选知识、解决方案、陷阱和决策。
-- `workflows/README.md`：开发、调试、评审和发布流程。
-- `projects/README.md`：项目级知识；仅在任务涉及已登记项目时继续加载。
+- [knowledge/README.md](knowledge/README.md)：通用工程、语言、框架和工具知识。
+- [experience/README.md](experience/README.md)：候选知识、解决方案、陷阱和决策。
+- [workflows/README.md](workflows/README.md)：开发、调试、评审和发布流程。
+- [projects/README.md](projects/README.md)：项目级知识；仅在任务涉及已登记项目时继续加载。
 
 ## 按需文件
 
-- `CATALOG.md`：知识仓完整目录，仅用于全库治理和正式写入前查重。
+- [CATALOG.md](CATALOG.md)：知识仓完整目录，仅用于全库治理和正式写入前查重。
 - `%AIKB_HOME%/system/rules/CONTRIBUTING.md`：正式新增、修订、归档或淘汰知识时读取。
 - `%AIKB_HOME%/system/templates/`：按知识类型选择写入模板。
 
