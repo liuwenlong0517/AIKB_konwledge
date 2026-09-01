@@ -2,11 +2,36 @@
 id: aikb:projects:aikb-web:phase-4b-install-repair-preconditions
 type: project-memory
 status: verified
+governance_version: 2
+change_class: factual-update
+authority: "控制仓提交 d00425efc033950b76710272c4efb2030edfb5a0 的维护差异固定语义模型、页面展示与安全回归；用户于 2026-09-02 审查通过"
+preparer: codex
+reviewer: user-liuwenlong
+reviewed_at: 2026-09-02
+approval_status: not-required
 tags: [aikb-web, webui, phase-4b, installation, repair, transaction, rollback, agent-adapter, windows, macos]
-applicable_versions: AIKB WebUI phase 4B Windows first release complete; waves 0-5 implemented and independently accepted
-last_verified: 2026-09-01
-review_when: 阶段4B开始任务分发、Agent用户配置格式变化、安装器目标或受管标记变化、环境变量策略变化、卸载准备准入、macOS设备就位时
+applicable_versions: AIKB WebUI phase 4B Windows first release plus drift readability enhancement at control commit d00425efc033950b76710272c4efb2030edfb5a0
+last_verified: 2026-09-02
+review_when: 维护差异语义、Agent用户配置格式、安装器目标或受管标记、环境变量策略、卸载准入或macOS实现边界变化时
 supersedes: []
+duplicate_check_statuses: [verified, candidate, deprecated]
+evidence:
+  - kind: commit
+    ref: "d00425efc033950b76710272c4efb2030edfb5a0"
+    result: "维护预览增加固定 display/action/current/expected/affected/preserved 语义，哈希降为折叠证据，未扩大路径、正文或写入边界。"
+    date: 2026-09-02
+  - kind: test
+    ref: "system/tools/aikb-web/backend/tests/test_phase4b_maintenance_readonly.py; system/tools/aikb-web/frontend/tests/MaintenancePage.test.tsx"
+    result: "后端覆盖固定语义与自由文本注入拒绝，前端覆盖当前问题、动作、影响字段、保留范围和折叠证据展示。"
+    date: 2026-09-02
+  - kind: command
+    ref: "npm run test -- --run tests/DashboardPage.test.tsx tests/ManualPage.test.tsx tests/AppLayout.test.tsx tests/MaintenancePage.test.tsx tests/RuntimePage.test.tsx (cwd=system/tools/aikb-web/frontend)"
+    result: "5 个相关测试文件共 21 项通过；生产构建和定向 ESLint 通过。"
+    date: 2026-09-02
+  - kind: user-confirmation
+    ref: "当前任务用户消息：我已经审查通过，提交并更新知识"
+    result: "用户确认本轮 WebUI 实现审查通过并授权提交与更新知识。"
+    date: 2026-09-02
 relations:
   - type: implements
     target: aikb:projects:aikb-web:management-webui-implementation-plan
@@ -79,6 +104,8 @@ relations:
 预览必须零副作用，不创建事务、备份、任务、审计 probe 或子进程。用户配置可能含有密钥和私有插件信息，因此页面只显示 AIKB 自有受管片段的结构化差异和逻辑叶子，不返回整份 TOML、JSON、Markdown、绝对路径或非受管内容。
 
 目标状态固定为 `ready`、`missing`、`drifted`、`conflict`、`invalid`、`unsupported` 和 `restart_required`。非受管同名对象、损坏配置、重解析点或配置根越界必须拒绝自动修复。
+
+阶段 5 的实际使用反馈表明，仅显示差异码和前后哈希不足以支持人工确认。控制仓 `d00425efc033950b76710272c4efb2030edfb5a0` 因此为每个固定逻辑叶子增加服务端白名单语义：显示名称、当前问题、固定动作、预期结果、受影响字段、受管范围和明确保留范围；哈希只在折叠证据区展示。语义只能由固定叶子和差异码推导，自由文本、环境真实值、物理路径、秘密、非受管正文和整份配置仍不能进入模型或页面。
 
 ## 补偿事务与恢复
 

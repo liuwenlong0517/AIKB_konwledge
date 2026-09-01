@@ -54,13 +54,13 @@
 - [AIKB 本体](projects/aikb/README.md)：AIKB 自身控制仓、知识仓与运行面的项目知识索引。
   - [AIKB 本体审计覆盖面与治理结果（2026-08 审计波次）](projects/aikb/audit-coverage-2026-08.md)：五个维度的审计覆盖、发现→封堵→验证映射，以及剩余取舍项。
 - [AIKB Web](projects/aikb-web/README.md)：AIKB 管理 WebUI 的项目知识索引。
-  - [AIKB 管理 WebUI 分阶段建设计划](projects/aikb-web/management-webui-implementation-plan.md)：统一前后端目录、页面布局、技术框架、受控动作模型、Windows 首发范围和 macOS 扩展预留方案。
+  - [AIKB 管理 WebUI 分阶段建设计划](projects/aikb-web/management-webui-implementation-plan.md)：统一前后端目录、页面布局、技术框架、受控动作模型、Windows 首发范围、阶段 5 反馈迭代和 macOS 扩展预留方案。
   - [第一阶段只读知识 MVP 实现基线](projects/aikb-web/phase-1-read-only-mvp.md)：共享知识查询、FastAPI/React 只读实现、安全边界和 Windows 验证基线。
-  - [第二阶段运行状态与审计实现基线](projects/aikb-web/phase-2-runtime-audit.md)：活动 Working State、检查点、双仓安全摘要、脱敏审计和 Windows 只读管理终端验证基线。
+  - [第二阶段运行状态与审计实现基线](projects/aikb-web/phase-2-runtime-audit.md)：活动与历史 Working State、检查点、双仓安全摘要、脱敏审计和 Windows 只读管理终端验证基线。
   - [第三阶段受控动作前置基线](projects/aikb-web/phase-3-controlled-actions-preconditions.md)：首批动作准入、任务 JSONL、SSE、Windows 进程树取消、同源确认和审计关联规划基线。
   - [第三阶段受控动作与任务中心实现基线](projects/aikb-web/phase-3-controlled-actions-implementation.md)：三项 Windows 只读动作、任务事实源、REST/SSE、Job Object、审计 v3 和安全验收基线。
   - [第四阶段规则治理前置基线](projects/aikb-web/phase-4-rule-governance-preconditions.md)：首批规则白名单、审计 v4、全仓冲突、完整差异预览、原子替换、恢复和 Windows 终验；阶段 4A 已完成。
-  - [第四阶段安装与修复前置基线](projects/aikb-web/phase-4b-install-repair-preconditions.md)：用户环境、Codex、Claude Code 三个静态目标，以及安全预览、跨文件补偿事务、崩溃恢复和六个开发波次。
+  - [第四阶段安装与修复前置基线](projects/aikb-web/phase-4b-install-repair-preconditions.md)：用户环境、Codex、Claude Code 三个静态目标，以及可读漂移语义、安全预览、跨文件补偿事务、崩溃恢复和六个开发波次。
   - [所有权与知识治理兼容契约](projects/aikb-web/governance-ownership-compatibility.md)：Working State v2/v3、owner/author 分离、SessionStart/foreign task 边界、规则治理 v2 和 Web 只读投影兼容检查点。
 - [Local Code RAG](projects/local-code-rag/README.md)：本地代码索引与检索基础设施的项目知识索引。
   - [本地生成式模型退出 RAG 主链路](projects/local-code-rag/local-llm-exclusion.md)：GPU 资源优先投入 embedding、索引和检索，生成与推理交给外部 Agent。

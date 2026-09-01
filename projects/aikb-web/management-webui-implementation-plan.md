@@ -2,11 +2,36 @@
 id: aikb:projects:aikb-web:management-webui-implementation-plan
 type: project-memory
 status: verified
+governance_version: 2
+change_class: factual-update
+authority: "控制仓提交 d00425efc033950b76710272c4efb2030edfb5a0 落地阶段5首批实际使用优化；用户于 2026-09-02 审查通过"
+preparer: codex
+reviewer: user-liuwenlong
+reviewed_at: 2026-09-02
+approval_status: not-required
 tags: [aikb-web, webui, fastapi, react, knowledge-management, control-plane, audit, windows, macos]
-applicable_versions: AIKB WebUI Windows first release complete through phase 4B; phase 5 is feedback-driven Windows continuous optimization
-last_verified: 2026-09-01
-review_when: WebUI 开始阶段开发、控制动作边界变化、AIKB 事实源或目录边界变化、macOS 设备就位并准备实现时
+applicable_versions: AIKB WebUI Windows first release through phase 4B plus phase 5 first feedback iteration at control commit d00425efc033950b76710272c4efb2030edfb5a0
+last_verified: 2026-09-02
+review_when: WebUI实际使用反馈形成新批次、控制动作边界变化、AIKB事实源或目录边界变化、数据维护准入或macOS设备就位时
 supersedes: []
+duplicate_check_statuses: [verified, candidate, deprecated]
+evidence:
+  - kind: commit
+    ref: "d00425efc033950b76710272c4efb2030edfb5a0"
+    result: "阶段5首批反馈迭代落地搜索导航调整、总览固定手册、维护漂移语义和历史 Working State 只读观察。"
+    date: 2026-09-02
+  - kind: test
+    ref: "system/tools/aikb-web/backend/tests/test_manuals_api.py; system/tools/aikb-web/backend/tests/test_runtime_history.py; system/tools/aikb-web/frontend/tests/DashboardPage.test.tsx; system/tools/aikb-web/frontend/tests/ManualPage.test.tsx; system/tools/aikb-web/frontend/tests/MaintenancePage.test.tsx; system/tools/aikb-web/frontend/tests/RuntimePage.test.tsx"
+    result: "手册白名单、索引降级可达性、漂移语义、活动/历史请求隔离和历史深链均有定向回归。"
+    date: 2026-09-02
+  - kind: command
+    ref: "npm run build and targeted eslint (cwd=system/tools/aikb-web/frontend)"
+    result: "TypeScript 与 Vite 生产构建通过，定向 ESLint 通过；仅保留既有 chunk 体积提示。"
+    date: 2026-09-02
+  - kind: user-confirmation
+    ref: "当前任务用户消息：我已经审查通过，提交并更新知识"
+    result: "用户确认本轮 WebUI 实现审查通过并授权提交与更新知识。"
+    date: 2026-09-02
 relations:
   - type: related_to
     target: aikb:projects:aikb-web:phase-1-read-only-mvp
@@ -22,7 +47,7 @@ AIKB 需要一套本地管理 WebUI，第一阶段用于查看已经落地的知
 
 项目初期以 Windows 为正式开发和验证平台。macOS 设备尚未就位，因此现阶段不开发 macOS 实现，也不声明已经兼容 macOS；公共接口、目录和平台能力模型必须预留扩展位置，使后续能够增加 macOS 适配而不重做前端、API、任务和审计体系。
 
-本计划是阶段开发的规划基线。阶段 0 至阶段 3 首批只读动作、阶段 4A 规则治理和阶段 4B Windows 安装修复均已完成；阶段 4B 已通过用户环境、Codex、Claude Code 三个真实目标的独立往返验收。下一阶段不预设大规模功能扩张，改为根据 Windows 版本实际使用反馈持续优化；macOS 在实体设备就位后再进入独立实现阶段。具体边界见关联条目。
+本计划是阶段开发的规划基线。阶段 0 至阶段 3 首批只读动作、阶段 4A 规则治理和阶段 4B Windows 安装修复均已完成；阶段 4B 已通过用户环境、Codex、Claude Code 三个真实目标的独立往返验收。阶段 5 首批实际使用反馈已在 2026-09-02 落地搜索入口调整、总览固定手册、配置漂移语义说明和历史 Working State 读取；数据维护因删除与恢复保护边界较高，保留为独立后续批次。macOS 在实体设备就位后再进入独立实现阶段。具体边界见关联条目。
 
 ## 建设目标
 
@@ -258,6 +283,7 @@ system/tools/aikb-web/
 ### 总览页
 
 - 正式知识数量、最近更新时间、索引状态和当前检查点；
+- 固定读取控制仓根 README 和 `system/COMMANDS.md` 的使用指南入口；手册不混入 verified 知识接口，知识总览降级时仍可进入；
 - 控制仓、知识仓状态；
 - 知识分类分布和最近更新；
 - 最近任务、审计事件、异常和待处理事项。
@@ -447,6 +473,8 @@ parameters:
 - MCP、后端、前端、类型检查、Lint、构建和结构校验按影响范围通过；
 - 双仓状态、提交、推送和遗留限制分别报告。
 
+2026-09-02 首批反馈迭代由控制仓 `d00425efc033950b76710272c4efb2030edfb5a0` 落地：搜索上调至总览之后；总览通过两个固定逻辑 ID 提供项目/命令手册；维护预览增加服务端固定的当前问题、动作、影响和保留语义；运行状态增加与活动接口分离的历史归档列表、详情和检查点深链。该批次不增加任意路径、配置正文、Working State 写入或数据清理能力。自动化和真实只读冒烟已通过，但没有执行新的真实浏览器视觉/E2E 验收，因此不能把本批次描述为重新完成整套发布终验。
+
 ### 阶段 6：macOS 实现
 
 本阶段只保留计划，待 macOS 实体设备就位后启动。启动前需要明确处理器架构、目标 Agent、Agent 配置目录和 Hook 行为，并准备独立测试数据。
@@ -511,11 +539,11 @@ macOS 设备就位
 macOS 平台实现与真实回归
 ```
 
-阶段 1 已交付 Windows 本地知识读取 MVP；阶段 2 已增加活动 Working State、检查点、双仓安全摘要和审计查询；阶段 3 首批三项只读动作、任务中心、实时事件和 Windows 进程树收敛也已实现；阶段 4A 已完成规则治理闭环；阶段 4B 已完成用户环境、Codex、Claude Code 安装修复闭环和真实往返验收。当前进入阶段 5，根据 Windows 实际使用反馈按小波次持续优化。知识、其他正式规则与 Git 元数据保持既定只读边界，macOS 继续只保留扩展位置，不声称支持。
+阶段 1 已交付 Windows 本地知识读取 MVP；阶段 2 已增加活动 Working State、检查点、双仓安全摘要和审计查询，并在阶段 5 补充独立历史归档观察；阶段 3 首批三项只读动作、任务中心、实时事件和 Windows 进程树收敛也已实现；阶段 4A 已完成规则治理闭环；阶段 4B 已完成用户环境、Codex、Claude Code 安装修复闭环和真实往返验收，并在阶段 5 补充漂移语义说明。当前按 Windows 实际使用反馈进行小波次优化。知识、其他正式规则与 Git 元数据保持既定只读边界，macOS 继续只保留扩展位置，不声称支持。
 
 ## 验证
 
-本计划来自用户需求确认和当前 AIKB 代码边界核对。2026-09-01 阶段 4B 独立验收完成后，重新核对目录、技术框架、安全边界和 macOS 预留策略仍适用，并将下一阶段调整为 Windows 实际使用反馈驱动的持续优化。
+本计划来自用户需求确认和当前 AIKB 代码边界核对。2026-09-01 阶段 4B 独立验收完成后，重新核对目录、技术框架、安全边界和 macOS 预留策略仍适用，并将下一阶段调整为 Windows 实际使用反馈驱动的持续优化。2026-09-02 首批反馈迭代经用户审查通过，定向后端 24 项（1 项按环境跳过）、相关前端 21 项、生产构建、定向 ESLint、Python 编译、手册真实读取和归档只读冒烟通过。
 
 React/FastAPI、共享 Python 核心、Markdown/JSONL 事实源和 SQLite 可重建派生层已经在阶段 0～4B 的实现及验收中得到验证。当前 Agent adapters、环境变量安装器和 Hook 命令仍以 Windows 为边界，因此 macOS 只保留扩展契约，不能作为已实现能力。
 
