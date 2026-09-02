@@ -13,3 +13,4 @@
 - [第四阶段安装与修复前置基线](phase-4b-install-repair-preconditions.md)：冻结用户环境、Codex、Claude Code 三个静态目标，以及可读漂移语义、安全预览、跨文件补偿事务、崩溃恢复和 Windows 真实验收门槛。
 - [所有权与知识治理兼容契约](governance-ownership-compatibility.md)：记录 Working State v2/v3、owner/author 分离、SessionStart 边界、规则治理 v2 和 Web 只读投影的兼容检查点。
 - [共享检索服务多词 AND 查询修复](search-multi-term-query-empty-results.md)：记录 `KnowledgeService.search()` 从整串短语改为跨词 AND、trigram 短词 LIKE 约束的实现与验证，统一修复 Web 搜索和 MCP `search_knowledge`。
+- [WebUI 延后维护项与复核门槛](webui-deferred-maintenance-review.md)：记录 WarningBar、公共依赖 chunk、workspace 清理和审计任意筛选提前停止的延期理由、触发条件与后续验收门槛。
