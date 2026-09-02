@@ -1,6 +1,6 @@
 # AIKB Web 项目知识
 
-本目录记录 AIKB 管理 WebUI（`aikb-web`）的长期架构决策、分阶段实现基线和能力边界。阶段 1、2 与阶段 3 首批受控动作已在 Windows 本机实现并验证；阶段 4A 第一小版本发布门槛已满足；阶段 4B 已完成静态目标、安全预览、补偿事务、恢复门禁、Windows 用户环境与 Codex/Claude Code 安装修复、公开 apply、任务投影及三个真实用户目标的独立往返验收。阶段 5 首批实际使用优化已增加总览固定手册、可读配置漂移语义和历史 Working State 观察；数据维护仍是独立后续批次。macOS 仍只保留扩展位置，不代表已经支持。
+本目录记录 AIKB 管理 WebUI（`aikb-web`）的长期架构决策、分阶段实现基线和能力边界。阶段 1、2 与阶段 3 首批受控动作已在 Windows 本机实现并验证；阶段 4A 第一小版本发布门槛已满足；阶段 4B 已完成静态目标、安全预览、补偿事务、恢复门禁、Windows 用户环境与 Codex/Claude Code 安装修复、公开 apply、任务投影及三个真实用户目标的独立往返验收。阶段 5 已增加总览固定手册、可读配置漂移语义、历史 Working State 观察及五类固定数据的显式/自动维护；macOS 仍只保留扩展位置，不代表已经支持。
 
 ## 项目索引
 
@@ -13,4 +13,4 @@
 - [第四阶段安装与修复前置基线](phase-4b-install-repair-preconditions.md)：冻结用户环境、Codex、Claude Code 三个静态目标，以及可读漂移语义、安全预览、跨文件补偿事务、崩溃恢复和 Windows 真实验收门槛。
 - [所有权与知识治理兼容契约](governance-ownership-compatibility.md)：记录 Working State v2/v3、owner/author 分离、SessionStart 边界、规则治理 v2 和 Web 只读投影的兼容检查点。
 - [共享检索服务多词 AND 查询修复](search-multi-term-query-empty-results.md)：记录 `KnowledgeService.search()` 从整串短语改为跨词 AND、trigram 短词 LIKE 约束的实现与验证，统一修复 Web 搜索和 MCP `search_knowledge`。
-- [WebUI 延后维护项与复核门槛](webui-deferred-maintenance-review.md)：记录 WarningBar、公共依赖 chunk、workspace 清理和审计任意筛选提前停止的延期理由、触发条件与后续验收门槛。
+- [WebUI 延后维护项与复核门槛](webui-deferred-maintenance-review.md)：记录 workspace 五类固定数据收敛的落地边界，以及 WarningBar、公共依赖 chunk 和审计任意筛选提前停止的延期理由与复核门槛。

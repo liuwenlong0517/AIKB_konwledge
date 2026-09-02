@@ -66,7 +66,7 @@
   - [第四阶段安装与修复前置基线](projects/aikb-web/phase-4b-install-repair-preconditions.md)：用户环境、Codex、Claude Code 三个静态目标，以及可读漂移语义、安全预览、跨文件补偿事务、崩溃恢复和六个开发波次。
   - [所有权与知识治理兼容契约](projects/aikb-web/governance-ownership-compatibility.md)：Working State v2/v3、owner/author 分离、SessionStart/foreign task 边界、规则治理 v2 和 Web 只读投影兼容检查点。
   - [共享检索服务多词 AND 查询修复](projects/aikb-web/search-multi-term-query-empty-results.md)：`KnowledgeService.search()` 按空白拆词、跨词 AND，并以 LIKE 约束 trigram 短词的共享修复与验证。
-  - [WebUI 延后维护项与复核门槛](projects/aikb-web/webui-deferred-maintenance-review.md)：WarningBar、公共依赖 chunk、workspace 清理和审计任意筛选提前停止的延期理由、复核条件与验收门槛。
+  - [WebUI 延后维护项与复核门槛](projects/aikb-web/webui-deferred-maintenance-review.md)：workspace 五类固定数据收敛的落地边界，以及 WarningBar、公共依赖 chunk 和审计任意筛选提前停止的延期理由与复核门槛。
 - [Local Code RAG](projects/local-code-rag/INDEX.md)：本地代码索引与检索基础设施的项目知识索引。
   - [本地生成式模型退出 RAG 主链路](projects/local-code-rag/local-llm-exclusion.md)：GPU 资源优先投入 embedding、索引和检索，生成与推理交给外部 Agent。
   - [异步索引任务队列与重启状态边界](projects/local-code-rag/async-index-task-queue.md)：索引任务的持久化状态、单工作线程约束、MCP 查询方式和自动恢复边界。
