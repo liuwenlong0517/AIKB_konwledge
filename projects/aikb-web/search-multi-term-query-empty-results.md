@@ -4,29 +4,33 @@ type: project-memory
 status: verified
 governance_version: 2
 change_class: factual-update
-authority: "共享核心 KnowledgeService.search() 源码核对与真实派生索引命令复现；未做代码修复，仅记录缺陷事实"
-preparer: claude-code
+authority: "控制仓提交 f4c9015 的共享 KnowledgeService.search() 多词 AND 查询实现、核心/Web 全量测试与真实派生索引复验"
+preparer: codex
 reviewer: user-liuwenlong
 reviewed_at: 2026-09-02
 approval_status: not-required
 tags: [aikb-web, aikb-mcp, knowledge-service, search, fts, trigram, sqlite, multi-term, webui]
-applicable_versions: "AIKB 共享核心 system/tools/aikb-mcp 当前实现；控制仓 main@6384480"
+applicable_versions: "AIKB 共享核心 system/tools/aikb-mcp；控制仓 main@f4c9015 及以后，直至检索契约再次变化"
 last_verified: 2026-09-02
-review_when: "KnowledgeService.search() 的查询分词、FTS trigram 索引、Web 或 MCP 搜索入口变化，或完成多词查询修复时"
+review_when: "KnowledgeService.search() 的分词、跨词语义、FTS tokenizer、字段匹配、排序合并或 Web/MCP 搜索入口变化时"
 supersedes: []
-duplicate_check_statuses: [verified, candidate]
+duplicate_check_statuses: [verified, candidate, deprecated]
 evidence:
-  - kind: command
-    ref: "python -c \"from aikb.config import Settings; from aikb.knowledge import KnowledgeService; s=Settings.load(); svc=KnowledgeService(s); print('WebUI', svc.search('WebUI', limit=5)['count']); print('multi', svc.search('WebUI 总览', limit=5)['count'])\"（cwd=system/tools/aikb-mcp）"
-    result: "真实派生索引中单词 'WebUI' 命中 5 条；含空格多词 'WebUI 总览' 命中 0 条。"
+  - kind: commit
+    ref: "f4c9015"
+    result: "共享检索按空白拆词，元数据路径采用词内字段 OR、跨词 AND；FTS 路径使用逐词短语 AND，并为 trigram 短词追加 LIKE 约束。"
+    date: 2026-09-02
+  - kind: test
+    ref: "python -m unittest discover -s tests -p 'test_*.py'（cwd=system/tools/aikb-mcp）"
+    result: "95 项通过、1 项按环境跳过；新增多词顺序无关、trigram 短词兜底和不存在词保持 0 条的回归覆盖。"
+    date: 2026-09-02
+  - kind: test
+    ref: "pwsh -NoProfile -File system/tools/aikb-web/scripts/validate-aikb-web.ps1"
+    result: "共享核心 95 项、Web 后端 289 项、前端 62 项通过；typecheck、lint、build 与 286 个 Markdown/55 个知识文件结构校验通过。"
     date: 2026-09-02
   - kind: command
-    ref: "对 workspace/db/aikb-knowledge.db 的 chunks_fts 执行 FTS 短语查询：\"WebUI\" / \"管理终端\" / \"AIKB WebUI\" / \"webui 管理终端 总览\""
-    result: "短语 \"WebUI\" 命中 100 行、\"管理终端\" 命中 5 行、连续子串 \"AIKB WebUI\" 命中 56 行；含空格的整串短语 \"webui 管理终端 总览\" 与 \"WebUI 总览\" 均为 0 行。"
-    date: 2026-09-02
-  - kind: file
-    ref: "system/tools/aikb-mcp/aikb/knowledge.py"
-    result: "search() 不做查询分词：元数据路径用整串 LIKE 匹配 id/标题/路径/正文/标签（约 358-372 行），FTS 路径把整串拼成带引号短语交给 trigram tokenizer（约 379-401 行），任一含空格的多词查询都要求整串连续出现，几乎必然返回空。"
+    ref: "真实派生索引调用 KnowledgeService.search()：WebUI 总览 / WebUI 管理终端 总览 / WebUI 不存在词"
+    result: "前两项分别命中 3 条和 2 条；包含不存在词的查询为 0 条，证明修复后召回恢复且保持 AND 语义。"
     date: 2026-09-02
 relations:
   - type: related_to
@@ -35,48 +39,50 @@ relations:
     target: aikb:projects:aikb-web:management-webui-implementation-plan
 ---
 
-# AIKB 共享检索服务多词查询必然返回空（整串短语不做分词）
+# AIKB 共享检索服务多词 AND 查询修复
 
 ## 背景
 
-AIKB 的 Web 搜索页面（`/knowledge/search`）和 MCP `search_knowledge` 都调用共享核心 `system/tools/aikb-mcp/aikb/knowledge.py` 的 `KnowledgeService.search()`。用户在 Web 搜索框输入"WebUI 安装修复""WebUI 总览"这类自然多词查询时，页面显示"无命中"，容易被误判为知识库没有相关内容。本项目条目记录缺陷事实、根因与复现方式，供后续修复前减少重复调查。
+AIKB 的 Web 搜索页面（`/knowledge/search`）和 MCP `search_knowledge` 都调用共享核心 `system/tools/aikb-mcp/aikb/knowledge.py` 的 `KnowledgeService.search()`。控制仓 `6384480` 及以前把含空格查询当作一个连续短语，导致“单词能搜到、多词搜不到”。控制仓提交 `f4c9015` 已在共享核心修复该问题，两种入口无需分别修改。
 
 ## 问题
 
-`KnowledgeService.search()` 把整个查询字符串（含空格）当作一个整体处理，不拆分检索词：
+修复前，`KnowledgeService.search()` 把整个查询字符串（含空格）当作一个整体处理，不拆分检索词：
 
 1. **元数据路径**（`knowledge.py:358-372`）：`LIKE '%<整串>%'` 同时匹配 id、标题、路径、正文块和标签，要求整串作为连续子串出现。
 2. **FTS 路径**（`knowledge.py:379-401`）：`tokenizer == "trigram"` 时把整串拼成带引号短语 `"<整串>"` 交给 FTS5 trigram tokenizer，要求整串（含空格）的连续 trigram 序列出现。
 
-结果是：**任何含空格的多词查询几乎必然返回 0 条**，即使每个词单独都能命中。单词查询（如 `WebUI`、`管理终端`、`总览`）正常，形成"单词能搜到、多词搜不到"的反直觉表现。
+结果是含空格的自然多词查询几乎必然返回 0 条，即使每个词单独都能命中。索引本身健康，缺陷位于查询构造层。
 
 ## 解决方案
 
-本条目只记录已确认的缺陷事实，不包含已实施的代码修复。修复方向建议（未实施，待决定）：
+`f4c9015` 在共享 `KnowledgeService.search()` 中实施以下契约：
 
-- 按空白把查询拆分为多个检索词，采用 AND 语义（文档需同时包含所有词）；
-- 元数据路径：每个检索词各自 OR 五个字段的 `LIKE`，跨词取 AND，保留精确 id/标题优先排序；
-- FTS 路径：对 `len >= 3`（trigram 可建索引）的检索词构造 `"词1" AND "词2"`，短词（如两字词）无法用 trigram 表达，交给元数据 LIKE 兜底；两条路径仍按分数合并去重。
+- 按空白拆分检索词，跨词采用 AND 语义；词的输入顺序不要求在正文中连续出现。
+- 元数据路径中，每个词可命中 ID、标题、逻辑路径、当前正文块或标签，五类字段取 OR，多个词组取 AND；精确 ID/标题排序仍按完整原查询计算。
+- FTS 路径把可索引词构造成 `"词1" AND "词2"`。trigram tokenizer 无法表达不足 3 个字符的短词，因此短词作为 LIKE 条件继续约束同一个 FTS 候选，不能因长词命中而降级成 OR。
+- 元数据与 FTS 候选继续沿用既有分数、去重、标签过滤、数量和摘要预算；Web 与 MCP API 参数及返回结构不变。
 
-修复时应同步补充多词查询的回归测试——现有测试（`system/tools/aikb-mcp/tests/test_core.py:148-154,325`）只断言单词查询，因此缺陷从未被测试覆盖。
+当前 AND 语义作用于同一索引 chunk 可见的文档元数据、标签和正文；本修复不改变 chunk 划分、跨 chunk 聚合、LIKE 通配符或排序权重。
 
 ## 验证
 
-在控制仓 `main@6384480`、知识仓独立目录的真实派生索引上复现（`cwd=system/tools/aikb-mcp`）：
+在控制仓提交 `f4c9015` 上完成以下验证：
 
-- `search('WebUI')` → 5 条；`search('管理终端')` → 2 条；`search('总览')` → 2 条；`search('安装修复')` → 5 条；
-- `search('WebUI 总览')`、`search('WebUI 管理')`、`search('WebUI 管理终端 总览')` → 0 条；
-- 直接查 `chunks_fts`：短语 `"WebUI"` → 100 行、`"管理终端"` → 5 行、连续子串 `"AIKB WebUI"` → 56 行；含空格的整串短语 → 0 行。
+- 隔离回归：`search("SQLite 中文")` 命中缓存条目，`search("缓存 SQLite")` 顺序反转仍命中，`search("SQLite 不存在")` 返回 0 条。
+- 真实派生索引：`search("WebUI 总览")` 命中 3 条，`search("WebUI 管理终端 总览")` 命中 2 条，`search("WebUI 不存在词")` 返回 0 条。
+- 共享核心测试 95 项通过、1 项跳过；Web 后端 289 项通过、16 项跳过；前端 62 项通过，typecheck、lint、build 和结构校验通过。
 
-MCP 入口（`server.py` `search_knowledge`）与 Web 入口（`api/v1/knowledge.py` `GET /search`）均直接调用同一 `KnowledgeService.search()`，两处都受影响。索引 tokenizer 为 `trigram`，`rebuilt=false`，索引本身健康；缺陷在查询构造层。
+验证使用的真实索引 tokenizer 为 `trigram` 且 `rebuilt=false`，说明结果变化来自查询构造修复，而不是重建或替换索引。
 
 ## 适用范围
 
-适用于 AIKB 共享知识检索服务的当前行为记录，影响 Web 搜索页面与 MCP `search_knowledge` 的多词查询召回。不表示检索服务已修复，也不改变任何正式知识、规则或安全边界；修复需另行决策并走既有验证门禁。
+适用于控制仓 `f4c9015` 及以后、检索契约未再次变化时的 AIKB 共享知识搜索。影响 Web 搜索页面与 MCP `search_knowledge` 的多词召回，但不改变 verified/candidate 状态过滤、标签过滤、索引事实源、读写权限或安全边界。
 
 ## 关联信息
 
-- 检索实现：`system/tools/aikb-mcp/aikb/knowledge.py`；
+- 修复提交：控制仓 `f4c9015`；
+- 检索实现与回归：`system/tools/aikb-mcp/aikb/knowledge.py`、`system/tools/aikb-mcp/tests/test_core.py`；
 - MCP 搜索入口：`system/tools/aikb-mcp/aikb/server.py`；
 - Web 搜索入口：`system/tools/aikb-web/backend/aikb_web/api/v1/knowledge.py`；
 - 相关阶段基线：[第一阶段只读知识 MVP 实现基线](phase-1-read-only-mvp.md)、[AIKB 管理 WebUI 分阶段建设计划](management-webui-implementation-plan.md)。
