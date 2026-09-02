@@ -1,10 +1,10 @@
 # AIKB Web 项目知识
 
-本目录记录 AIKB 管理 WebUI（`aikb-web`）的长期架构决策、分阶段实现基线和能力边界。阶段 1、2 与阶段 3 首批受控动作已在 Windows 本机实现并验证；阶段 4A 第一小版本发布门槛已满足；阶段 4B 已完成静态目标、安全预览、补偿事务、恢复门禁、Windows 用户环境与 Codex/Claude Code 安装修复、公开 apply、任务投影及三个真实用户目标的独立往返验收。阶段 5 已增加总览固定手册、可读配置漂移语义、历史 Working State 观察及五类固定数据的显式/自动维护；macOS 仍只保留扩展位置，不代表已经支持。
+本目录记录 AIKB 管理 WebUI（`aikb-web`）的长期架构决策、分阶段实现基线和能力边界。阶段 1、2 与阶段 3 首批受控动作已在 Windows 本机实现并验证；阶段 4A 第一小版本发布门槛已满足；阶段 4B 已完成静态目标、安全预览、补偿事务、恢复门禁、Windows 用户环境与 Codex/Claude Code 安装修复、公开 apply、任务投影及三个真实用户目标的独立往返验收。阶段 5 已增加总览固定手册、可读配置漂移语义、历史 Working State、运行任务关键字搜索及五类固定数据的显式/自动维护；当前 Windows 开发阶段已收口，后续按实际问题迭代。macOS 仍只保留扩展位置，不代表已经支持。
 
 ## 项目索引
 
-- [AIKB 管理 WebUI 分阶段建设计划](management-webui-implementation-plan.md)：统一前后端目录、页面布局、技术框架、受控动作模型、Windows 首发范围、阶段 5 反馈迭代和 macOS 扩展预留方案。
+- [AIKB 管理 WebUI 分阶段建设计划](management-webui-implementation-plan.md)：统一前后端目录、页面布局、技术框架、受控动作模型、Windows 首发与阶段 5 收口状态，以及 macOS 扩展预留方案。
 - [第一阶段只读知识 MVP 实现基线](phase-1-read-only-mvp.md)：记录共享知识查询、FastAPI/React 实现、安全边界、Windows 实际启动和完整验证结果。
 - [第二阶段运行状态与审计实现基线](phase-2-runtime-audit.md)：记录活动与历史 Working State、检查点、双仓安全摘要、脱敏审计、只读 API/UI 和 Windows 验证结果。
 - [第三阶段受控动作前置基线](phase-3-controlled-actions-preconditions.md)：冻结动作准入、任务 JSONL、SSE、Windows Job Object、同源确认和审计关联。

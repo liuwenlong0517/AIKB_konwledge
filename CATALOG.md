@@ -57,7 +57,7 @@
 - [AIKB 本体](projects/aikb/INDEX.md)：AIKB 自身控制仓、知识仓与运行面的项目知识索引。
   - [AIKB 本体审计覆盖面与治理结果（2026-08 审计波次）](projects/aikb/audit-coverage-2026-08.md)：五个维度的审计覆盖、发现→封堵→验证映射，以及剩余取舍项。
 - [AIKB Web](projects/aikb-web/INDEX.md)：AIKB 管理 WebUI 的项目知识索引。
-  - [AIKB 管理 WebUI 分阶段建设计划](projects/aikb-web/management-webui-implementation-plan.md)：统一前后端目录、页面布局、技术框架、受控动作模型、Windows 首发范围、阶段 5 反馈迭代和 macOS 扩展预留方案。
+  - [AIKB 管理 WebUI 分阶段建设计划](projects/aikb-web/management-webui-implementation-plan.md)：统一前后端目录、页面布局、技术框架、受控动作模型、Windows 首发与阶段 5 收口状态，以及 macOS 扩展预留方案。
   - [第一阶段只读知识 MVP 实现基线](projects/aikb-web/phase-1-read-only-mvp.md)：共享知识查询、FastAPI/React 只读实现、安全边界和 Windows 验证基线。
   - [第二阶段运行状态与审计实现基线](projects/aikb-web/phase-2-runtime-audit.md)：活动与历史 Working State、检查点、双仓安全摘要、脱敏审计和 Windows 只读管理终端验证基线。
   - [第三阶段受控动作前置基线](projects/aikb-web/phase-3-controlled-actions-preconditions.md)：首批动作准入、任务 JSONL、SSE、Windows 进程树取消、同源确认和审计关联规划基线。
