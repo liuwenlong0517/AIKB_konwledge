@@ -1,12 +1,7 @@
 # AIKB 知识内容面
 
-本仓库只存放能够被查询和复用的知识内容，不存放 AIKB 自身的接入规则、个人配置、模板或行为测试。它由独立 Git 管理，物理位置由 `AIKB_KNOWLEDGE_HOME` 指定，默认装配在 `%AIKB_HOME%\content`。正常知识写入只能发生在本仓库及其局部索引中；具体条目发生新增、移动、重命名或删除时，同时维护本仓库 `CATALOG.md`。
+本仓库是 AIKB 的知识内容面，由独立 Git 管理；物理位置由 `AIKB_KNOWLEDGE_HOME` 指定，默认装配在 `%AIKB_HOME%\content`。这里只保存能够被查询和复用的正式知识、候选材料及其导航，不保存 AIKB 控制规则、个人配置、模板、行为测试或本机 Working State。
 
-## 分类入口
+本文件只说明仓库职责和边界，不承担知识导航。分类入口统一由根 `INDEX.md` 提供，各级目录中的 `INDEX.md` 只承担局部索引角色，`CATALOG.md` 用于全库治理和正式写入前查重。
 
-- [knowledge/README.md](knowledge/README.md)：按工程主题、语言、框架和工具组织的通用知识。
-- [experience/README.md](experience/README.md)：候选内容、已验证方案、工程陷阱和决策记录。
-- [workflows/README.md](workflows/README.md)：可重复执行的开发、调试、评审和发布流程。
-- [projects/README.md](projects/README.md)：仅对特定项目成立的事实、约束和解决方案。
-
-项目知识与通用知识必须分开；能够跨项目复用的结论应进入 `knowledge/`、`experience/` 或 `workflows/`，不得长期留在 `projects/`。MCP 对外继续返回 `content/...` 逻辑路径，使知识仓移动不影响稳定引用。
+正式知识按通用知识、经验、工作流和项目知识分开治理；能够跨项目复用的结论不得长期留在项目目录。根 `inbox/` 是全局统一的未验证来源入口，尚未归类的候选材料经 LLM 整理和人工验证后再分发到适当的正式目录。已经明确目标分类、只为保留稳定入口的待完善占位文档可留在目标目录，但不能被视为已验证知识。MCP 对外继续返回 `content/...` 逻辑路径，使知识仓物理位置变化不影响稳定引用。

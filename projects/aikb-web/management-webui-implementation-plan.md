@@ -17,12 +17,20 @@ supersedes: []
 duplicate_check_statuses: [verified, candidate, deprecated]
 evidence:
   - kind: commit
+    ref: "5b58e865f5fca3bce389388341b30e93cd9dabdf"
+    result: "统一知识索引为 INDEX、迁移根 Inbox 与控制仓 COMMANDS，并修复 WebUI 固定手册读取路径。"
+    date: 2026-09-02
+  - kind: commit
     ref: "d00425efc033950b76710272c4efb2030edfb5a0"
     result: "阶段5首批反馈迭代落地搜索导航调整、总览固定手册、维护漂移语义和历史 Working State 只读观察。"
     date: 2026-09-02
   - kind: test
     ref: "system/tools/aikb-web/backend/tests/test_manuals_api.py; system/tools/aikb-web/backend/tests/test_runtime_history.py; system/tools/aikb-web/frontend/tests/DashboardPage.test.tsx; system/tools/aikb-web/frontend/tests/ManualPage.test.tsx; system/tools/aikb-web/frontend/tests/MaintenancePage.test.tsx; system/tools/aikb-web/frontend/tests/RuntimePage.test.tsx"
     result: "手册白名单、索引降级可达性、漂移语义、活动/历史请求隔离和历史深链均有定向回归。"
+    date: 2026-09-02
+  - kind: test
+    ref: "system/tools/aikb-web/scripts/validate-aikb-web.ps1; system/tools/aikb-web/backend/tests/test_manuals_api.py"
+    result: "目录角色调整后共享核心 96 项、Web 后端 290 项和前端 62 项通过；命令手册固定逻辑 ID 只读取控制仓根 COMMANDS.md，不回退旧路径。"
     date: 2026-09-02
   - kind: command
     ref: "npm run build and targeted eslint (cwd=system/tools/aikb-web/frontend)"
@@ -283,7 +291,7 @@ system/tools/aikb-web/
 ### 总览页
 
 - 正式知识数量、最近更新时间、索引状态和当前检查点；
-- 固定读取控制仓根 README 和 `system/COMMANDS.md` 的使用指南入口；手册不混入 verified 知识接口，知识总览降级时仍可进入；
+- 固定读取控制仓根 `README.md` 和 `COMMANDS.md` 的使用指南入口；手册不混入 verified 知识接口，知识总览降级时仍可进入；
 - 控制仓、知识仓状态；
 - 知识分类分布和最近更新；
 - 最近任务、审计事件、异常和待处理事项。

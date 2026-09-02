@@ -67,5 +67,5 @@ React 前端提供总览、知识库、搜索、阅读和系统状态五个路�
 - WebUI 源码：`system/tools/aikb-web/`；
 - 共享知识服务：`system/tools/aikb-mcp/aikb/knowledge.py`；
 - Windows 构建、启动和验证：`system/tools/aikb-web/scripts/`；
-- 完整命令说明：`system/COMMANDS.md`；
+- 完整命令说明：控制仓根 `COMMANDS.md`；
 - 第一阶段 API、安全、页面和平台扩展说明：`system/tools/aikb-web/docs/`。

@@ -101,4 +101,4 @@ Owner 与 latest checkpoint author 继续分开投影；历史响应不返回归
 - WebUI 源码与阶段文档：`system/tools/aikb-web/`；
 - 共享 Working State 与审计读模型：`system/tools/aikb-mcp/aikb/workstate.py`、`audit.py`；
 - 完整验证入口：`system/tools/aikb-web/scripts/validate-aikb-web.ps1`；
-- 操作命令：`system/COMMANDS.md`。
+- 操作命令：控制仓根 `COMMANDS.md`。

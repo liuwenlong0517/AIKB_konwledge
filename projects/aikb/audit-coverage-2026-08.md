@@ -4,7 +4,7 @@ type: project-memory
 status: verified
 tags: [aikb, audit, governance, rule-closure, runtime, webui, maintenance]
 applicable_versions: "AIKB 控制仓/知识仓；审计与验证于 2026-08-27 至 2026-09-01"
-last_verified: 2026-08-27
+last_verified: 2026-09-02
 review_when: "AIKB 规则、运行层、WebUI 治理或审计机制发生重大变化，需要复核本覆盖面是否仍准确时"
 supersedes: []
 relations: []
@@ -34,7 +34,7 @@ relations: []
 - G1 写入闭环缺 Git 提交步骤（高）→ 封堵 `a6d9fa2`（CONTRIBUTING §6 补第 6-7 步）。
 - G2 缺失 front matter 的知识文件被静默跳过、校验假通过（高）→ 封堵 `a6d9fa2`（load_documents 报错）。
 - G3 type↔目录一致性无机器校验（中）→ 封堵 `a6d9fa2`（TYPE_DIRECTORY_PREFIXES 映射）。
-- G4 局部 README 登记不在校验内（中）→ 封堵 `a6d9fa2`（validate-structure 新增局部 README 链接检查）。
+- G4 局部索引登记不在校验内（中）→ 原封堵 `a6d9fa2`；2026-09-02 索引文件统一改名为 `INDEX.md` 后，`validate-structure` 同步校验局部 `INDEX.md` 链接并拒绝知识仓中的非根 `README.md`。
 - G5 缺 pitfall/workflow 模板（中）→ 封堵 `a6d9fa2`（新增两模板）。
 - G6 supersedes 悬空目标不校验（低）→ 封堵 `a6d9fa2`（格式 + 存在性双校验）。
 - G7 规则预算余量极小（AI_RULES 余 16 字符）（低）→ 改善 `a6d9fa2`（余量 16→227）。
@@ -66,11 +66,20 @@ relations: []
 - 跨会话归属加固：会话绑定（agent+exact-session-required）、session_id 原样传递、不自动恢复其他会话的活动任务。
 - 知识治理：knowledge-entry schema 扩展、模板强化、indexer 校验增强、workstate 治理（owner/author 分离）。
 
+### 2026-09-02 目录角色与 Inbox 边界复核
+
+- 知识仓根 `README.md` 只说明仓库职责，不再重复分类入口；根和各级 `INDEX.md` 统一承担索引角色，索引器排除 `INDEX.md` 而不是按旧约定排除全部 `README.md`。
+- 根 `inbox/` 统一承接尚未归类的 `type: candidate` 来源卡片；已经明确目标分类、用于保留稳定入口的 `type: workflow + status: candidate` 占位仍留在 `workflows/`，不与 Inbox 来源卡片混同。
+- 控制仓提交 `5b58e865f5fca3bce389388341b30e93cd9dabdf` 落地目录契约、索引器、结构校验及 WebUI 固定手册路径修复。
+- 控制仓命令手册移至根 `COMMANDS.md`，控制仓根 `CATALOG.md` 删除；完整知识目录继续只由知识仓 `CATALOG.md` 维护。
+- WebUI 的 `commands` 逻辑 ID 和前端路由保持不变，后端固定白名单改读根 `COMMANDS.md`；定向测试验证不会回退到旧 `system/COMMANDS.md`。
+
 ## 验证
 
 - 每项发现对应封堵提交，均经回归验证：Python 单元测试（27 项基线）、`validate-structure.ps1`、`validate-adapters.ps1`、`validate-clear-workspace.ps1`、MCP JSON-RPC 实测、临时目录负面用例。
 - 生产证据：`workspace/audit/events/*.jsonl` 中可观测到 `resume_context_injected`、`checkpoint_required`、`recursion_skipped` 等真实触发。
 - 双环境验证：真实 Windows Terminal 与重定向（Git Bash/CI）各跑一遍适配器测试，暴露 `[Console]::OutputEncoding` 退化为 gb2312 的编码边界问题。
+- 2026-09-02 目录调整回归：共享 MCP 核心 96 项通过、Web 后端 290 项通过（16 项按环境跳过）、Web 前端 62 项通过，并通过 typecheck、lint、生产构建、结构校验、适配器校验和双仓性能门槛。
 
 ## 适用范围
 
